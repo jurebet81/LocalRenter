@@ -1,6 +1,6 @@
 <?php
 
-class ClientsController extends AppController {
+class RentersController extends AppController {
 
         public $helpers = array('Html','Form');
         public $components = array('Session');
@@ -24,8 +24,8 @@ class ClientsController extends AppController {
                     $this->redirect(array('action' => 'add'));                    
                 }                            
                 
-                if($this->Client->save($this->request->data)){
-                    $this->Session->setFlash("<div class = 'info'>Cliente guardado con éxito.</div>");
+                if($this->Renter->save($this->request->data)){
+                    $this->Session->setFlash("<div class = 'info'>Arrendador guardado con éxito.</div>");
                     $this->redirect(array('action' => 'add'));
                 }else{
                     $this->Session->setFlash("<div class = 'err'>Hubo un error, por favor contacte al administrador.</div>");
