@@ -52,7 +52,7 @@
                 <li><?php echo $this->Html->link('Rentar', 
                          array('controller' =>'leases', 'action' => 'add'));?>
 		</li>                
-                <li><?php echo $this->Html->link('Nuevo Lote', 
+                <li><?php echo $this->Html->link('Gastos', 
                          array('controller' =>'purchases', 'action' => 'add'));?>
 		</li>
                 <li><?php echo $this->Html->link('Nuevo Apartam', 

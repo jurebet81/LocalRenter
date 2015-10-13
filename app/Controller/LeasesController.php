@@ -35,6 +35,7 @@ class LeasesController extends AppController {
                 $this->request->data['Sale']['date'] = date('Y-m-d',strtotime($this->request->data['Sale']['date']));   
                 
                 $message = $this->custoValidation($this->request->data);
+                
                 if ($message!=null){                  
                     $this->Session->setFlash("<div class = 'err' >" . $message . "</div>");
                     $this->redirect(array('action' => 'add'));
@@ -47,13 +48,20 @@ class LeasesController extends AppController {
                 }  
             }else {
                 
+            	$locations = array('-1' => '');
                 $paramsLoc = array(                    
                     'order' => array( //contidion is defined to find apartamens in ascencdent order
                         'Location.name' => 'ASC'));
                 
                 $this->loadModel('Location');
-                $locations = $this->Location->find('list',$paramsLoc);
+                array_push($locations, $this->Location->find('list',$paramsLoc));
                 $this->set('locations',$locations);
+                
+                $paramsRen = array('order' => array( //contidion is defined to find providers in ascencdent order
+                		'Renter.name' => 'ASC'),
+                );
+                $this->set('renters', $this->Lease->Renter->find('list',$paramsRen));
+                
                 
             }
             $this->layout = 'home';
@@ -68,7 +76,7 @@ class LeasesController extends AppController {
                         'Apartament.location_id' => $id),
                     'order' => array( //contidion is defined to find apartamens in ascencdent order
                         'Apartament.name' => 'DESC'));   
-                $this->set('apartaments', $this->Lease->Apartament->find('list',$paramsApar));
+                $this->set('apartaments', $this->Lease->Apartament->find('all',$paramsApar));
                 
         }
         
