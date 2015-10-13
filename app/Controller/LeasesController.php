@@ -1,5 +1,8 @@
 <?php
 
+App::uses('Folder', 'Utility');
+App::uses('File', 'Utility');
+
 class LeasesController extends AppController {
         
         public $helpers = array('Html','Form');
@@ -32,19 +35,22 @@ class LeasesController extends AppController {
         public function add(){            
             
              if ($this->request->is('post')){                         
-                $this->request->data['Sale']['date'] = date('Y-m-d',strtotime($this->request->data['Sale']['date']));   
+                $this->request->data['Lease']['init_date'] = date('Y-m-d',strtotime($this->request->data['Lease']['init_date']));   
+                if ($this->request->data['Lease']['end_date']!= null){
+                	$this->request->data['Lease']['end_date'] = date('Y-m-d',strtotime($this->request->data['Lease']['end_date']));
+                }
                 
-                $message = $this->custoValidation($this->request->data);
-                
+                //$message = $this->custoValidation($this->request->data);
+                $message = null;
                 if ($message!=null){                  
                     $this->Session->setFlash("<div class = 'err' >" . $message . "</div>");
                     $this->redirect(array('action' => 'add'));
                     return;
                 } 
                                
-                if ($this->Sale->save($this->request->data)){
-                    $this->Session->setFlash("<div class = 'info'>Venta ingresada correctamente, ahora proceda a ingresar los productos</div>");
-                    $this->redirect(array('controller' => 'saledetails', 'action' => 'add', $this->Sale->id));
+                if ($this->Lease->save($this->request->data)){
+                    $this->Session->setFlash("<div class = 'info'>Contrato ingresado correctamente, Resumen del contrato</div>");
+                    $this->redirect(array('controller' => 'Leases', 'action' => 'download', $this->lease->id));
                 }  
             }else {
                 
@@ -67,8 +73,15 @@ class LeasesController extends AppController {
             $this->layout = 'home';
         }
         
-        public function fetchApartaments($id = null){
-              
+        
+        public function download($id = null){
+        	
+        	$dir = new Folder(WEBROOT_DIR/file);
+        	
+        	$this->layout = 'home';
+        }
+        
+        public function fetchApartaments($id = null){             
             
             $paramsApar = array(
                     'conditions' => array(
