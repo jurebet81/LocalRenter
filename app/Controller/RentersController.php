@@ -68,16 +68,14 @@ class RentersController extends AppController {
             $this->layout = 'home';
        }
        
-       public function custoValidation($client){
+       public function custoValidation($renter){
            
            $message=null;
            
-           if (empty($client['Client']['name'])){
+           if (empty($renter['Renter']['name'])){
                $message = 'Nombre: Es un campo obligatorio.';
-           //}else if (!ctype_alnum($client['Client']['name'])){
-               //$message = 'Nombre: Sólo permite letras y/o números.';           
-           }else if (!is_numeric($client['Client']['phone']) && $client['Client']['phone'] != ''){
-               $message = 'Teléfono: Ingresar unicamente números.';
+           }else if (!ctype_digit($renter['Renter']['identification'])){
+               $message = 'C�dula: Sólo permite números.';      
            }           
            return $message;
             

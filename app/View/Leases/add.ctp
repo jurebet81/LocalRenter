@@ -6,8 +6,10 @@
         <label>Locacion:</label>
             <?php echo $this->Form->input('location_id',  array ('label' => ''));?><br>
         <label>Apartamento:</label>
-            <?php echo $this->Form->input('apartament_id',  array ('label' => ''));?><br>        
-        <label>Fecha de Renta:</label>
+            <?php echo $this->Form->input('apartament_id',  array ('label' => ''));?><br>  
+        <label>Arrendatario:</label>
+            <?php echo $this->Form->input('renter_id',  array ('label' => ''));?><br>      
+        <label>Fecha de inicio de Renta:</label>
             <?php echo $this->Form->input('date', array('class'=>'datepicker', 'type'=>'text','label'=>'', 'readonly' => 'readonly' )); ?>  <br>
         <label>Informaci&oacuten Adicional:</label>
             <?php echo $this->Form->input('observations', array ('label' => ' ')); ?>        
@@ -18,6 +20,9 @@
  <script language="javascript" type="text/javascript">
 		
              $(document).ready(function() {
+             	
+             	
+             	
                 $( "input.datepicker" ).datepicker({
                     dateFormat: 'dd-mm-yy',
                     yearRange: "-100:+50",
@@ -31,9 +36,7 @@
                 
                 $('#LeaseLocationId').change(function(){
                     
-                    var selectedLoc = $(this).val();
-                          
-                                         
+                    var selectedLoc = $(this).val();   
                     $.ajax({ 
                         type: 'POST',  
                         dataType: 'json',
@@ -41,7 +44,7 @@
                         url: '/LocalRenter/Leases/fetchApartaments/' + selectedLoc,            
                         
                         success: function (data){
-                            $('#LeaseApartamentId').empty();                            
+                            $('#LeaseApartamentId').empty();                                                     
                             $.each(data,function(i,value){
                                 $('#LeaseApartamentId').append("<option value='" + i + 
                                         "'>" + value + "</option>")});                            
@@ -52,7 +55,7 @@
                     });
                 
             });
-            
+            $("#LeaseLocationId").trigger("change");            
             });
            
         </script>

@@ -8,15 +8,14 @@ class Lease extends AppModel {
       'Apartament' => array(
             'className' => 'Apartament',            
             'foreignKey' => 'apartament_id'
+        ),
+    	'Renter' => array(
+            'className' => 'Renter',            
+            'foreignKey' => 'render_id', 
         )  
     );
-    
-    /*public $belongsTo = array(
-      'Apartament' => array(
-            'className' => 'Apartament',            
-            'foreignKey' => 'apartament_id', 
-        )  
-    );*/
+   
+   
     /*
     public $hasMany = array(
         'Saledetail' => array(

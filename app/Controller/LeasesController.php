@@ -67,10 +67,9 @@ class LeasesController extends AppController {
                         'Apartament.available' => 'si',
                         'Apartament.location_id' => $id),
                     'order' => array( //contidion is defined to find apartamens in ascencdent order
-                        'Apartament.name' => 'ASC'));               
-                            
-                $this->log( $this->Lease->Apartament->find('list',$paramsApar));            
-                $this->set('apartaments', $this->Lease->Apartament->find('list',$paramsApar)); 
+                        'Apartament.name' => 'DESC'));   
+                $this->set('apartaments', $this->Lease->Apartament->find('list',$paramsApar));
+                
         }
         
         public function view(){

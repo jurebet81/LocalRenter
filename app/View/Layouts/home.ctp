@@ -58,8 +58,8 @@
                 <li><?php echo $this->Html->link('Nuevo Apartam', 
                          array('controller' =>'apartaments', 'action' => 'add'));?>
 		</li>
-                <li><?php echo $this->Html->link('Clientes', 
-                         array('controller' =>'clients', 'action' => 'add'));?>
+                <li><?php echo $this->Html->link('Arrendatario', 
+                         array('controller' =>'renters', 'action' => 'add'));?>
 		</li>
                 <li><?php echo $this->Html->link('Proveedores', 
                          array('controller' =>'providers', 'action' => 'add'));?>
