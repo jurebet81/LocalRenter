@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+	<head>	
+	<title>Imprimir factura	</title>
+	<link rel="stylesheet" type="text/css" href="mystyle.css">	
+	</head>
+	<body>
+			<div id = "ReceiptHeader">
+				<table id = "StoreInfo">
+					<tr>
+						<th id = 'StoreName' >TIENDA LOS PRIMOS</th>		
+					</tr>
+					<tr> 
+						<td>NIT : 988889999-2</td>	
+					</tr>
+					<tr> 
+						<td>Teléfono : 8415942</td>
+					</tr>
+					<tr> 
+						<td>No somos grandes contribuyentes</td>
+					</tr>
+				</table>
+				<table id = "ReceiptInfo">
+					<tr> 
+						<th>FACTURA DE VENTA</th>						
+					</tr>
+					<tr> 
+						<th>587988-55400</th>							
+					</tr>					
+					<tr>						
+						<td>Fecha : 10/08/2015</td>						
+					</tr>
+				</table>
+				<br>
+			</div>
+			<table id = "CustomerInfo">
+				<tr> 
+					<td><span class = 'CustoTags'>Cliente: </span>Julián Alberto Restrepo Betancur</td>
+					<td><span class = 'CustoTags'>CC o NIT: </span>10278989012</td>		
+				</tr>
+				<tr> 
+					<td><span class = 'CustoTags'>Dirección: </span>Carrera 50 #50-20</td>
+					<td><span class = 'CustoTags'>Teléfono: </span>3128650125 </td>		
+				</tr>
+			</table>
+			<br>				
+			<table id = "SaleInfo">
+				<tr>
+					<th id = 'Amount' >Cant.</th>
+					<th>Artículo</th>
+					<th>Valor Un.</th>
+					<th>Valor total</th>
+				</tr>
+				<tr> 
+					<td id = 'Amount'>3</td>
+					<td>Memoria USB 20GB</td>
+					<td class = 'Values'>20.000</td>
+					<td class = 'Values'>60.000</td>
+				</tr>
+				<tr> 
+					<td id = 'Amount'>2</td>
+					<td>Mantenimiento a computador Full</td>
+					<td class = 'Values'>60.000</td>
+					<td class = 'Values'>120.000</td>
+				</tr>
+				<tr> <td>&nbsp;</td>	<td>&nbsp;</td>	 <td>&nbsp;</td> <td>&nbsp;</td></tr>
+				<tr> <td>&nbsp;</td>	<td>&nbsp;</td>	 <td>&nbsp;</td> <td>&nbsp;</td></tr>
+				<tr id = 'SpecialRow'> <td>&nbsp;</td>	<td>&nbsp;</td>	 <td>&nbsp;</td> <td>&nbsp;</td></tr>
+				<tr class = 'TotalValues'>
+					<td  colspan ="3" >SubTotal: </td>
+					<td class = 'Values' >84.000</td>
+				</tr>
+				<tr class = 'TotalValues'>
+					<td colspan ="3" >IVA 16%: </td>
+					<td class = 'Values'>16.000</td>
+				</tr>
+				<tr class = 'TotalValues'>
+					<td colspan ="3" >Total: </td>
+					<td class = 'Values'>100.000</td>
+				</tr>
+			</table>						
+	</body>
+	
+</html>

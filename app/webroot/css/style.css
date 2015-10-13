@@ -1,0 +1,278 @@
+#templatemo_header{
+    /*background: url(../img/Juszak-Realty-Logo-v13-0815-01_white.png) no-repeat 0 0;*/
+    /*width: auto;
+    background-position: center;
+    background-size:contain;*/
+	text-align : center;
+	font-size : 22px;
+	width: 70%;
+	
+	left :400px;
+	color : white;
+	font-family: 'lucida grande';
+	position: relative;
+	
+	
+	
+}
+
+.uName{
+    font-size:20px;
+    text-align: left;
+    color: #BABABA; 
+	float	:	right;	
+	width: 30%;
+	position: static;	
+	
+}
+
+
+body{
+    background-color: #949494;
+}
+
+section{
+    width: 100%;
+    height: 1000px;    
+    background-color: white;
+    border:none;
+    border-radius:25px;
+    padding: 30px 0px 30px 20px;    
+}
+
+legend{
+font-family: 'lucida grande',verdana,helvetica,arial,sans-serif;
+color: red;
+font-size: 25px;
+font-weight: bold;
+}
+
+.add, .edit   
+{
+    width:500px;    
+}
+
+.formFilter{
+    font-size: 16px;
+    padding-right: 30px;    
+}
+
+ .formFilter .input.select{
+    width: 200px;
+    padding-right: 55%;
+    float: right;
+    
+}
+
+.formFilter  .checkbox{
+    width   :   100px;
+    float   : left; 
+    
+}
+
+#dateContainer label{
+   width: 70px;
+   display: inline;
+   float: left;
+   font-size:16px;
+   padding-top: 10px;
+   
+}
+
+#dateContainer .input{
+    width: 250px;  
+    display: inline;
+    float:left; 
+    
+}
+
+
+
+.addpro {
+    width: 40%;
+    float: left;
+}
+
+label{
+font-size: 19px;
+font-weight: bold;
+margin-left: 25px;
+
+}
+
+fieldset {
+    border:1px solid #999;
+    border-radius:10px;
+    box-shadow:0 0 10px #999;
+    padding-top: 20px; 
+    padding-bottom: 20px;
+}
+
+.input input:read-only{
+    border-color: #C4C4C4;
+    color: #A8A8A8;
+    border: solid;
+}
+
+
+select, text, textArea, .datepicker, .input input{
+    font-size: 17px;
+    padding: 1%;
+    width: 80%;
+    border-radius:5px;
+    border-color: #A8A8A8;
+    text-transform: capitalize;
+}
+
+.submit input[type=submit]:hover {
+	background: #5BA150;
+}
+
+input[type=submit] {
+	display: inline;
+	font-size: 19px;
+	width: auto;
+        border: 1px solid;
+        border-radius: 3px;
+        margin: 20px 0px 10px 150px;
+}
+
+.submit input[type=submit] {
+	background:#62af56;
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#76BF6B), to(#3B8230));
+	background-image: -webkit-linear-gradient(top, #76BF6B, #3B8230);
+	background-image: -moz-linear-gradient(top, #76BF6B, #3B8230);
+	border-color: #2d6324;
+	color: #fff;
+	text-shadow: rgba(0, 0, 0, 0.5) 0px -1px 0px;
+	padding: 8px 10px;
+}
+
+textArea{
+    height: 60px;
+}
+   
+.tablesummary
+{
+	font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+	font-size: 15px;
+	alignment-adjust: middle;
+        margin: 0 auto;
+	width: 80%;
+	text-align: center;
+	border-collapse: collapse;
+        
+}
+.tablesummary th
+{
+	font-size: 15px;
+	font-weight: normal;
+	padding: 8px;
+	background: #383838;
+	border-top: 4px solid #383838;
+	border-bottom: 1px solid #383838;
+	color: whitesmoke;
+}
+.tablesummary  td
+{
+	padding: 8px;
+	background: #e8edff; 
+	border-bottom: 1px solid #fff;
+	color: #383838;
+	border-top: 1px solid transparent;
+}
+.tablesummary tr:hover td
+{
+	background: #d0dafd;
+	color: #383838;
+}
+
+.addpro .tablesummary {
+    
+    width: 100%;
+} 
+
+#rightContainer{
+    float: right;
+    width: 60%;
+}
+
+#totalheader{
+    font-size: 17px;
+    font-weight: bolder;
+}
+#totalvalue{
+    font-size: 17px;
+    font-weight: bolder;
+    color: red;
+}
+
+#pesosValue{
+    text-align : right;
+}
+
+.pagination {
+	padding: 3px;
+	margin: 3px;
+	text-align:center;
+        font-size:16px;
+}
+
+.pagination a {
+	padding: 2px 5px 2px 5px;
+	margin: 2px;
+	border: 1px solid #EEE;
+	text-decoration: none; /* no underline */
+	color: #036CB4;
+}
+
+.pagination a:hover,
+.pagination a:active {
+	border: 1px solid #999;
+	color: #666;
+}
+.pagination .current {
+	padding: 2px 5px 2px 5px;
+	margin: 2px;
+	border: 1px solid #036CB4;
+	font-weight: bold;
+	background-color: #036CB4;
+	color: #FFF;
+}
+.pagination .disabled {
+	padding: 2px 5px 2px 5px;
+	margin: 2px;
+	border: 1px solid #EEE;
+	color: #DDD;
+}
+
+.infoPag{    
+    font-size: 12px;
+    text-align: center;
+    font-weight: bold;    
+}
+
+
+
+.err, .info {
+    background: url(../img/test-fail-icon.png) no-repeat 0 0;
+    color:red;    
+    padding-left: 20px;   
+    position: static;    
+}
+
+
+.info {
+    background: url(../img/test-pass-icon.png) no-repeat 0 0;
+    color:green;    
+    padding-left: 20px;   
+    position: static;    
+}
+
+
+#footer{
+     background: url(../img/templatemo_footer.png) repeat 0 0;     
+     border: solid #303030 medium;
+     color: #BABABA;
+     text-align: center;     
+}

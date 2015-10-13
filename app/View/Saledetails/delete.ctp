@@ -1,0 +1,1 @@
+<h1>Eliminar producto de la venta</h1>
