@@ -75,10 +75,34 @@ class LeasesController extends AppController {
         
         
         public function download($id = null){
-        	
-        	$dir = new Folder(WEBROOT_DIR/file);
-        	
-        	$this->layout = 'home';
+            $pathFile = WWW_ROOT . DS . 'files' . DS . 'Contract_template.txt';
+            $handle = fopen($pathFile, "r");
+            $content = fread($handle,filesize($pathFile));
+            
+            $data = array("inquilino_name" => "Julian Inquilino","iniquilino_identification" => '1027884448',
+                'apartament_name' => 'apto de en lado', 'apartament_location' => 'Andes');
+            $newData = strtr($content, $data);
+            
+            $pathFile2 = WWW_ROOT . DS . 'files' . DS . 'Contract.txt';
+            $pathFile3 = WWW_ROOT . DS . 'files' . DS . 'Contract' . "inquilino" . ".doc";
+            $handle2 = fopen($pathFile2, "c");
+            fwrite($handle2,$newData);
+            fclose($handle2);
+            rename($pathFile2,$pathFile3);
+            
+             $this->viewClass = 'Media';    
+            $params = array(
+                'id'        => 'Contractinquilino.doc',
+                'name'      => 'Contractinquilino',
+                'extension' => 'doc',
+                'mimeType'  => array(
+                    'doc' => 'application/msword'
+                ),
+                'path'      => 'files' . DS
+            );
+            $this->set($params);
+                
+            $this->layout = 'home';
         }
         
         public function fetchApartaments($id = null){             
