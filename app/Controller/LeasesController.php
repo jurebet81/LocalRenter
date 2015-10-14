@@ -176,8 +176,8 @@ class LeasesController extends AppController {
                     return $leases;
                 }else{
                     $this->set('leases',$leases);                
-                }    
-                $this->log($leases);             
+                }   
+                           
             }
             $this->layout = 'home';             
         }
@@ -192,6 +192,27 @@ class LeasesController extends AppController {
                $message = 'Fecha: Debe ingresar una fecha vÃ¡lida.';
            }      
            return $message;            
+        }
+        
+        public function edit($id){
+        	 
+        	$this->Lease->id = $id;
+        	if ($this->request->is('get')){
+        		$this->request->data = $this->Lease->read();        		 
+        	}else{
+        		//$message = $this->custoValidation($this->request->data);
+        		$message = null;
+        		if ($message!=null){
+        			$this->Session->setFlash("<div class = 'err'>" . $message . "</div>");
+        			$this->redirect(array('action' => 'edit', $this->Provider->id));
+        		}
+        		 
+        		if($this->Lease->save($this->request->data)){
+        			$this->Session->setFlash("<div class = 'info'>Contrato actualizado con éxito.</div>");
+        			$this->redirect(array('action' => 'view'));
+        		}
+        	}
+        	$this->layout = 'home';
         }
         
         public function findConditions($fromDate,$toDate,$client_id){

@@ -175,7 +175,7 @@ textArea{
 	padding: 8px;
 	background: #e8edff; 
 	border-bottom: 1px solid #fff;
-	color: #383838;
+	
 	border-top: 1px solid transparent;
 }
 .tablesummary tr:hover td
@@ -212,7 +212,7 @@ textArea{
 	padding: 3px;
 	margin: 3px;
 	text-align:center;
-        font-size:16px;
+    font-size:16px;
 }
 
 .pagination a {
@@ -250,7 +250,6 @@ textArea{
 }
 
 
-
 .err, .info {
     background: url(../img/test-fail-icon.png) no-repeat 0 0;
     color:red;    
@@ -266,6 +265,15 @@ textArea{
     position: static;    
 }
 
+.uptodatepayment{
+	color : green;
+	font-weight: bolder;	
+}
+
+.expiredpayment{
+	color :red;
+	font-weight: bolder;
+}
 
 #footer{
      background: url(../img/templatemo_footer.png) repeat 0 0;     
