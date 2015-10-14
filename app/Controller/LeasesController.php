@@ -27,7 +27,7 @@ class LeasesController extends AppController {
         						'conditions' => array('Apto.id = Lease.apartament_id')
         				),        
         		),
-        		'order' => array('Lease.last_payment_date' => 'desc'),
+        		'order' => array('Lease.last_payment_date' => 'ASC'),
         );
         
             

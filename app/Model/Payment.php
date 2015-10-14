@@ -1,6 +1,6 @@
 <?php
 
-class Provider extends AppModel{
+class Payment extends AppModel{
      public $hasMany = array(
         'Purchase' => array(
             'className' => 'Purchase',            
@@ -13,10 +13,7 @@ class Provider extends AppModel{
      				'className' => 'Lease',
      				'foreignKey' => 'lease_id',
      		)
-     );
-     
-    
-   
+     ); 
     
 }
 ?>

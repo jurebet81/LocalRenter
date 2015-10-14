@@ -10,10 +10,7 @@
 	left :400px;
 	color : white;
 	font-family: 'lucida grande';
-	position: relative;
-	
-	
-	
+	position: relative;	
 }
 
 .uName{
@@ -22,10 +19,8 @@
     color: #BABABA; 
 	float	:	right;	
 	width: 30%;
-	position: static;	
-	
+	position: static;		
 }
-
 
 body{
     background-color: #949494;
@@ -49,7 +44,7 @@ font-weight: bold;
 
 .add, .edit   
 {
-    width:500px;    
+    width:800px;    
 }
 
 .formFilter{
@@ -86,8 +81,6 @@ font-weight: bold;
     
 }
 
-
-
 .addpro {
     width: 40%;
     float: left;
@@ -105,7 +98,11 @@ fieldset {
     border-radius:10px;
     box-shadow:0 0 10px #999;
     padding-top: 20px; 
-    padding-bottom: 20px;
+    padding-bottom: 20px;    
+}
+
+fieldset table{
+    width : 100%;
 }
 
 .input input:read-only{

@@ -7,31 +7,44 @@ class PaymentsController extends AppController{
     
     public $paginate = array(
             'limit' => 15,
-            'order' => array('Provider.name' => 'asc'),
+            'order' => array('Payment.date' => 'asc'),
         );
     
     public function index(){
         $this->layout = 'home';	
     }
     
-    public function add(){
-         if ($this->request->is('post')){
-         	
-             //$message = $this->custoValidation($this->request->data);
+    public function add($leaseId = null){
+    	
+         if ($this->request->is('post')){         	
+             $message = null;
+             
+             date_default_timezone_set('America/New_York');
+             $today = getdate();
+             $this->request->data['Payment']['date'] = $today['year'] .
+             '-' . $today['mon'] . '-' . $today['mday'];
+             
              if ($message!=null){                  
                  $this->Session->setFlash("<div class = 'err' >" . $message . "</div>");
                  $this->redirect(array('action' => 'add'));
                  return;
              }   
              
-             if($this->Provider->save($this->request->data)){
-                 $this->Session->setFlash("<div class = 'info'>Proveedor guardado con éxito.</div>");
-                 $this->redirect(array('action' => 'add'));
+             if($this->Payment->save($this->request->data)){
+                 $this->Session->setFlash("<div class = 'info'>Pago registrado con éxito.</div>");
+                 $this->redirect(array('action' => 'print'));
              }else{
                  $this->Session->setFlash("<div class = 'err'>Hubo un error, por favor contacte al administrador.</div>");
                  $this->redirect(array('action' => 'error'));
              }
-         }            
+         } else {
+         	
+         	$this->loadModel('Lease');
+         	$contract = $this->Lease->findById($leaseId);
+         	$this->set('contract',$contract);     	
+         	
+         	
+         }    
             $this->layout = 'home';	
     }
         

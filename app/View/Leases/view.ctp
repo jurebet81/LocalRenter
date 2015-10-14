@@ -4,49 +4,43 @@
     <table class ="tablesummary">
         <tr>
             <th> <?php echo $this->Paginator->sort('id', 'CONTRATO No.')?></th>
-            <th> <?php echo $this->Paginator->sort('Client.name', 'CLIENTE')?></th>
-            <th> <?php echo $this->Paginator->sort('date', 'FECHA VENTA')?></th>
-            <th>VALOR TOTAL</th>            
-            <th>ACCIONES</th>
+            <th> <?php echo $this->Paginator->sort('holder_name', 'INQUILINO')?></th>
+            <th> <?php echo $this->Paginator->sort('Apto.name', 'APARTAMENTO')?></th>            
+            <th>VALOR CONTRATO</th> 
+            <th> <?php echo $this->Paginator->sort('last_payment_date', 'PAGO_HASTA')?></th>                       
+            <th>OPERACIONES</th>
             
         </tr>
-        <?php $totalSales = 0; ?>
-        <?php foreach ($sales as $sale){ ?>
+        
+        <?php foreach ($leases as $lease){ ?>
         <tr>
-            <td> <?php echo h($sale['Sale']['id']); ?></td>
-            <td> <?php echo h($sale['Cl']['name']); ?></td>
-            <td> <?php echo h($sale['Sale']['date']); ?></td> 
-            <td id="pesosValue"> <?php echo number_format(h($sale['0']['total']), 0, '.', '.'); ?></td>
-            
+            <td> <?php echo h($lease['Lease']['id']); ?></td>
+            <td> <?php echo h($lease['Lease']['holder_name']); ?></td>
+            <td> <?php echo h($lease['Apto']['name']); ?></td>             
+            <td> <?php echo number_format(h($lease['Lease']['amount']), 0, '.', '.'); ?></td> 
+            <td> <?php echo h($lease['Lease']['last_payment_date']); ?></td>                         
             <td>
-                <?php echo $this->Html->image('details-icon.png', array ('alt' =>'CakePHP', 'url' =>
-                    array ('controller' => 'Saledetails', 'action' => 'view', $sale['Sale']['id'])
+                 <?php echo $this->Html->image('payment-icon.png', array ("alt" =>"CakePHP", 'url' =>
+                    array ('controller' => 'Payments', 'action' => 'add', $lease['Lease']['id']),                    
                          ));
-                ?>           
-                <?php echo $this->Html->image('printer-icon.png', array ('alt' =>'CakePHP', 'url' =>
-                    array ('controller' => 'Saledetails', 'action' => 'printReceipt', $sale['Sale']['id'])
+                 ?> 
+                <?php echo $this->Html->image('edit-icon.png', array ('alt' =>'CakePHP', 'url' =>
+                    array ('controller' => 'Lease', 'action' => 'edit', $lease['Lease']['id'])
                          ));
                 ?>          
-                <?php echo $this->Html->image('edit-icon.png', array ("alt" =>"CakePHP", 'url' =>
-                    array ('controller' => 'Saledetails', 'action' => 'add', $sale['Sale']['id']),
-                    
+                <?php echo $this->Html->image('printer-icon.png', array ('alt' =>'CakePHP', 'url' =>
+                    array ('controller' => 'Lease', 'action' => 'download', $lease['Lease']['id'])
+                         ));
+                ?>                                          
+                 <?php echo $this->Html->image('delete-icon.png', array ("alt" =>"CakePHP", 'url' =>
+                    array ('controller' => 'Lease', 'action' => 'close', $lease['Lease']['id']),                    
                          ));
                  ?>
+                 
             </td>
         </tr>
-        <?php 
-            $totalSales = $totalSales + h($sale['0']['total']);
-        } ?>
-        <tr> 
-            <td></td><td></td>
-            <td id ='totalvalue'> 
-                Total
-            </td>
-            <td id ='totalvalue'>
-                <div id = "pesosValue"><?php echo number_format($totalSales, 0, '.', '.'); ?> </div>
-            </td>
-            <td></td>        
-        </tr>
+        <?php } ?>
+        
     </table>
     <p class ="infoPag"> 
         <?php echo $this->Paginator->counter(
