@@ -13,7 +13,7 @@
                     
                    <label>Hasta:</label> <?php echo $this->Form->input('ToDate', array(
                         'class'=>'datepicker', 'type'=>'text','label'=>'', 'readonly' => 'readonly', 'default'=>'')); ?>      
-                </div               
+                </div>               
     </fieldset>
     <?php echo $this->Form->End(' Consultar '); ?> 
 </div>

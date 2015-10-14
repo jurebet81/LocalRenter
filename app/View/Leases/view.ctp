@@ -1,9 +1,9 @@
 <div class="view">
     
-    <h3>LISTA DE VENTAS</h3>
+    <h3>LISTA DE CONTRATOS ACTIVOS</h3>
     <table class ="tablesummary">
         <tr>
-            <th> <?php echo $this->Paginator->sort('id', 'FACTURA NRO')?></th>
+            <th> <?php echo $this->Paginator->sort('id', 'CONTRATO No.')?></th>
             <th> <?php echo $this->Paginator->sort('Client.name', 'CLIENTE')?></th>
             <th> <?php echo $this->Paginator->sort('date', 'FECHA VENTA')?></th>
             <th>VALOR TOTAL</th>            

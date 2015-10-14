@@ -29,8 +29,8 @@ class ApartamentsController extends AppController {
                 //$today = getdate();
                 //$this->request->data['Product']['date_submitted'] = $today['year'] . '-' . $today['mon'] . '-' . $today['mday'];              
                 if ($this->Apartament->save($this->request->data)){
-                    $this->Session->setFlash("<div class = 'info'>Apartament ingresado correctamente.</div>");
-                    $this->redirect(array('controller' => 'apartaments', 'action' => 'add'));
+                    $this->Session->setFlash("<div class = 'info'>Apartamento ingresado correctamente.</div>");
+                    $this->redirect(array('action' => 'add'));
                 }else{
                     $this->Session->setFlash("<div class = 'err'>Hubo un error, por favor contacte al administrador.</div>");
                     $this->redirect(array('action' => 'error'));

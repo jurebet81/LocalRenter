@@ -7,9 +7,13 @@ class Apartament extends AppModel {
     public $hasMany = array(
         'Lease' => array(
             'className' => 'Lease'           
-            )        
+         ),
+    	'Expense' => array(
+    			'className' => 'Expense'
+    	)
     );
     
+   
     public $belongsTo = array(
       'Location' => array(
             'className' => 'Location',            
@@ -17,9 +21,9 @@ class Apartament extends AppModel {
         )  
     );
             
-    public $validate = array(           
+    /*public $validate = array(           
          'name' => array(
-             'rule' => '/^[ A-Za-z0-9ÑñáÁéÉíÍóÓúÚ_@.]*$/',
+             'rule' => '/^[ A-Za-z0-9Ã‘Ã±Ã¡Ã�Ã©Ã‰Ã­Ã�Ã³Ã“ÃºÃš_@.]*$/',
              'required' => true
          ),    
         'rent_price' => array(
@@ -28,7 +32,7 @@ class Apartament extends AppModel {
                 'message' => 'Numeros permitidos'
         ), 
                               
-     );
+     );*/
   
     
 }

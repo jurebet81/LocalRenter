@@ -1,6 +1,6 @@
 <?php
 
-class ProvidersController extends AppController{
+class PaymentsController extends AppController{
     
     public $helpers = array('Html','Form');    
     public $components = array('Session');
@@ -16,7 +16,8 @@ class ProvidersController extends AppController{
     
     public function add(){
          if ($this->request->is('post')){
-             $message = $this->custoValidation($this->request->data);
+         	
+             //$message = $this->custoValidation($this->request->data);
              if ($message!=null){                  
                  $this->Session->setFlash("<div class = 'err' >" . $message . "</div>");
                  $this->redirect(array('action' => 'add'));

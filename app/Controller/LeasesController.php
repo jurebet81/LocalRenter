@@ -7,9 +7,29 @@ class LeasesController extends AppController {
         
         public $helpers = array('Html','Form');
         public $components = array('Session','RequestHandler');
-        public $cond = array();
+        public $cond = array();             
+
+        public $paginate = array(  //join for retrieve sales details and prices together...
+        		'fields' => array(
+        				'Lease.id',
+        				'Lease.holder_name',
+        				'Apto.name',        				
+        				'Lease.amount',
+        				'Lease.init_date',
+        				'Lease.last_payment_date',
+        		),        		
+        		'recursive' => 0,
+        		'limit' => 15,
+        		'joins' => array(        				
+        				array (
+        						'table' => 'apartaments',
+        						'alias' => 'Apto',
+        						'conditions' => array('Apto.id = Lease.apartament_id')
+        				),        
+        		),
+        		'order' => array('Lease.last_payment_date' => 'desc'),
+        );
         
-         
             
 	public function index(){	
             
@@ -35,7 +55,9 @@ class LeasesController extends AppController {
         public function add(){            
             
              if ($this->request->is('post')){                         
-                $this->request->data['Lease']['init_date'] = date('Y-m-d',strtotime($this->request->data['Lease']['init_date']));   
+                $this->request->data['Lease']['init_date'] = date('Y-m-d',strtotime($this->request->data['Lease']['init_date']));  
+                $this->request->data['Lease']['last_payment_date'] = $this->request->data['Lease']['init_date'];
+                
                 if ($this->request->data['Lease']['end_date']!= null){
                 	$this->request->data['Lease']['end_date'] = date('Y-m-d',strtotime($this->request->data['Lease']['end_date']));
                 }
@@ -75,6 +97,7 @@ class LeasesController extends AppController {
         
         
         public function download($id = null){
+        	
             $pathFile = WWW_ROOT . DS . 'files' . DS . 'Contract_template.txt';
             $handle = fopen($pathFile, "r");
             $content = fread($handle,filesize($pathFile));
@@ -90,7 +113,7 @@ class LeasesController extends AppController {
             fclose($handle2);
             rename($pathFile2,$pathFile3);
             
-             $this->viewClass = 'Media';    
+            $this->viewClass = 'Media';    
             $params = array(
                 'id'        => 'Contractinquilino.doc',
                 'name'      => 'Contractinquilino',
@@ -118,9 +141,7 @@ class LeasesController extends AppController {
         }
         
         public function view(){
-            $fromDate = '';
-            $toDate = '';
-            $client_id = -1;
+           
             
             if ($this->request->is('post')){ 
                 $data = $this->request->data; 
@@ -135,8 +156,7 @@ class LeasesController extends AppController {
                 
                 $this->cond = array ($conditions);
                 $this->paginate['conditions'] = $this->cond;  
-                $sales = $this->paginate();  
-                
+                $sales = $this->paginate(); 
                 
                 if ($this->request->is('requested')){   //pregunta de eleeento
                     return $sales;
@@ -144,24 +164,22 @@ class LeasesController extends AppController {
                     $this->set('sales',$sales);         
                 }
             }else{
-                if ($this->Session->check('conditions')){                    
+                /*if ($this->Session->check('conditions')){                    
                     $conditions = $this->Session->read('conditionsS');
                     //$this->log($conditions);
-                }
-                                                 
-                $this->cond = array ($conditions);                
-                $this->Sale->recursive = 0; 
-                $this->paginate['conditions'] = $this->cond;
-                $sales = $this->paginate();
-                               
+                } */                                                
+                //$this->cond = array ($conditions);                
+                $this->Lease->recursive = 0; 
+                //$this->paginate['conditions'] = $this->cond;
+                $leases = $this->paginate();                               
                 if ($this->request->is('requested')){ //pregunta de eleeento
-                    return $sales;
+                    return $leases;
                 }else{
-                    $this->set('sales',$sales);                
-                }                 
+                    $this->set('leases',$leases);                
+                }    
+                $this->log($leases);             
             }
-            $this->layout = 'home'; 
-            
+            $this->layout = 'home';             
         }
 	        
         public function custoValidation($newSale){

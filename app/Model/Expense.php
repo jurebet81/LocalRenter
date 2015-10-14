@@ -1,26 +1,26 @@
 <?php
 
-class Purchase extends AppModel {
+class Expense extends AppModel {
     
-    public $hasMany = array(
+    /*public $hasMany = array(
         'Purchasedetail' => array(
             'className' => 'Purchasedetail',            
         )        
-    );
+    );*/
     
     public $belongsTo = array(
-      'Provider' => array(
-            'className' => 'Provider',            
-            'foreignKey' => 'provider_id', 
+      'Apartament' => array(
+            'className' => 'Apartament',            
+            'foreignKey' => 'apartament_id', 
         )  
     );
     
     public $validate = array( 
-        'id_invoice' => array(
+        /*'id_invoice' => array(
             'rule' => 'alphaNumeric',
             'required' => true,
             'message' => 'Por favor ingresar número de factura.'
-        ),
+        ),*/
         
         /*'date_requested' => array(
             'date' => array(                
@@ -28,7 +28,7 @@ class Purchase extends AppModel {
                 'message' => 'Por favor ingrese fecha.',
             ),
         ),*/
-         'date_delivered' => array(
+         'date' => array(
             'date' => array(                
                 'rule' => array('date', 'ymd'),
                 'message' => 'Por favor ingrese fecha.',

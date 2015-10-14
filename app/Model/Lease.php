@@ -1,9 +1,7 @@
 <?php
 
 class Lease extends AppModel {
-    
         
-    
     public $belongsTo = array(
       'Apartament' => array(
             'className' => 'Apartament',            
@@ -11,16 +9,14 @@ class Lease extends AppModel {
         ),
     	'Renter' => array(
             'className' => 'Renter',            
-            'foreignKey' => 'render_id', 
+            'foreignKey' => 'renter_id', 
         )  
-    );
-   
-   
-    /*
+    );  
+    
     public $hasMany = array(
-        'Saledetail' => array(
-            'className' => 'Saledetail',            
+        'Payment' => array(
+            'className' => 'Payment',            
         )        
-    );*/
+    );
     
 }

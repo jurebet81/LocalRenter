@@ -7,12 +7,16 @@ class Provider extends AppModel{
             )        
         );
      
-    public $validate = array(
-         'name' => array(
-             'rule' => '/^[ A-Za-z0-9ÑñáÁéÉíÍóÓúÚ_@.]*$/',
-             'required' => true
-         )
+     
+     public $belongsTo = array(
+     		'Lease' => array(
+     				'className' => 'Lease',
+     				'foreignKey' => 'lease_id',
+     		)
      );
+     
+    
+   
     
 }
 ?>

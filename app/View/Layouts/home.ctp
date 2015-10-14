@@ -53,7 +53,7 @@
                          array('controller' =>'leases', 'action' => 'add'));?>
 		</li>                
                 <li><?php echo $this->Html->link('Gastos', 
-                         array('controller' =>'purchases', 'action' => 'add'));?>
+                         array('controller' =>'expenses', 'action' => 'add'));?>
 		</li>
                 <li><?php echo $this->Html->link('Nuevo Apartam', 
                          array('controller' =>'apartaments', 'action' => 'add'));?>
@@ -70,8 +70,8 @@
                     // echo $this->Html->link('Reportes', array('controller' => $this->params['controller']));
                     ?>		               
                     <ul>
-                        <li><?php echo $this->Html->link('Ventas', 
-                            array('controller' =>'sales', 'action' => 'index'));?>
+                        <li><?php echo $this->Html->link('Arrendos', 
+                            array('controller' =>'leases', 'action' => 'view'));?>
                         </li> 
                         <li><?php echo $this->Html->link('Lotes', 
                             array('controller' =>'purchases', 'action' => 'index'));?>
