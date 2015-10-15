@@ -13,7 +13,7 @@
         	<td><label>UBICACI&Oacute;N:</label>
             	<?php echo $this->Form->input('location_id',  array ('label' => ''));?></td>
         	<td><label>APARTAMENTO A TOMAR:</label>
-            	<?php echo $this->Form->input('apartament_id',  array ('label' => ''));?></td> 
+            	<?php echo $this->Form->input('apartment_id',  array ('label' => ''));?></td> 
         </tr>
         <tr> <td> <label> </label></td> <td> <label> </label> </td> </tr> 
          <tr>	
@@ -43,7 +43,7 @@
  <script language="javascript" type="text/javascript">
 		
              $(document).ready(function() {
-             	var apartaments;             	
+             	var apartments;             	
                 $( "input.datepicker" ).datepicker({
                     dateFormat: 'dd-mm-yy',
                     yearRange: "-100:+50",
@@ -61,16 +61,16 @@
                         type: 'POST',  
                         dataType: 'json',
                         contentType : 'application/json; charset=utf-8',                      
-                        url: '/LocalRenter/Leases/fetchApartaments/' + selectedLoc,   
+                        url: '/LocalRenter/Leases/fetchApartments/' + selectedLoc,   
                         success: function (data){
-                        	apartaments = data;
-                            $('#LeaseApartamentId').empty();   
+                        	apartments = data;
+                            $('#LeaseApartmentId').empty();   
                                                                           
-                            $.each(data,function(i,apartament){
-                                $('#LeaseApartamentId').append("<option value='" + apartament['Apartament']['id'] + 
-                                        "'>" + apartament['Apartament']['name'] + "</option>")});                               
+                            $.each(data,function(i,apartment){
+                                $('#LeaseApartmentId').append("<option value='" + apartment['Apartment']['id'] + 
+                                        "'>" + apartment['Apartment']['name'] + "</option>")});                               
                                         
-                            $("#LeaseApartamentId").trigger("change");                            
+                            $("#LeaseApartmentId").trigger("change");                            
                         },
                         error: function(e){                            
                             console.log(e);
@@ -78,10 +78,10 @@
                    });
                 
             });
-            $('#LeaseApartamentId').change(function(){             
-            	$.each(apartaments,function(i,apartament){            		
-                       if (apartament['Apartament']['id'] == $('#LeaseApartamentId').val()) {                       		
-                       		$('#LeaseAmount').val(apartament['Apartament']['rent_price']);
+            $('#LeaseApartmentId').change(function(){             
+            	$.each(apartments,function(i,apartment){            		
+                       if (apartment['Apartment']['id'] == $('#LeaseApartmentId').val()) {                       		
+                       		$('#LeaseAmount').val(apartment['Apartment']['rent_price']);
                        		return false;
                        }                          
                   });

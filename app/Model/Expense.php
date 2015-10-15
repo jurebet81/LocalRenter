@@ -9,9 +9,9 @@ class Expense extends AppModel {
     );*/
     
     public $belongsTo = array(
-      'Apartament' => array(
-            'className' => 'Apartament',            
-            'foreignKey' => 'apartament_id', 
+      'Apartment' => array(
+            'className' => 'Apartment',            
+            'foreignKey' => 'apartment_id', 
         )  
     );
     

@@ -22,9 +22,9 @@ class LeasesController extends AppController {
         		'limit' => 15,
         		'joins' => array(        				
         				array (
-        						'table' => 'apartaments',
+        						'table' => 'apartments',
         						'alias' => 'Apto',
-        						'conditions' => array('Apto.id = Lease.apartament_id')
+        						'conditions' => array('Apto.id = Lease.apartment_id')
         				),        
         		),
         		'order' => array('Lease.last_payment_date' => 'ASC'),
@@ -103,7 +103,7 @@ class LeasesController extends AppController {
             $content = fread($handle,filesize($pathFile));
             
             $data = array("inquilino_name" => "Julian Inquilino","iniquilino_identification" => '1027884448',
-                'apartament_name' => 'apto de en lado', 'apartament_location' => 'Andes');
+                'apartment_name' => 'apto de en lado', 'apartment_location' => 'Andes');
             $newData = strtr($content, $data);
             
             $pathFile2 = WWW_ROOT . DS . 'files' . DS . 'Contract.txt';
@@ -128,15 +128,15 @@ class LeasesController extends AppController {
             $this->layout = 'home';
         }
         
-        public function fetchApartaments($id = null){             
+        public function fetchApartments($id = null){             
             
             $paramsApar = array(
                     'conditions' => array(
-                        'Apartament.available' => 'si',
-                        'Apartament.location_id' => $id),
+                        'Apartment.available' => 'si',
+                        'Apartment.location_id' => $id),
                     'order' => array( //contidion is defined to find apartamens in ascencdent order
-                        'Apartament.name' => 'DESC'));   
-                $this->set('apartaments', $this->Lease->Apartament->find('all',$paramsApar));
+                        'Apartment.name' => 'DESC'));   
+                $this->set('apartments', $this->Lease->Apartment->find('all',$paramsApar));
                 
         }
         
@@ -201,7 +201,7 @@ class LeasesController extends AppController {
         		$this->request->data = $this->Lease->read();   
         		
         		$this->loadModel('Location');
-        		$location = $this->Location->findById($this->request->data['Apartament']['location_id']);
+        		$location = $this->Location->findById($this->request->data['Apartment']['location_id']);
         		
         		$this->request->data['Location'] = $location['Location'];
         			 		 

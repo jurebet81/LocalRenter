@@ -14,7 +14,7 @@
         	<td><label>UBICACI&Oacute;N:</label>
             	<?php echo $this->Form->input('Location.name',  array ('label' => '', 'readonly' => 'readonly'));?></td>
         	<td><label>APARTAMENTO A TOMAR:</label>
-            	<?php echo $this->Form->input('Apartament.name',  array ('label' => '','readonly' => 'readonly'));?></td> 
+            	<?php echo $this->Form->input('Apartment.name',  array ('label' => '','readonly' => 'readonly'));?></td> 
         </tr>
         <tr> <td> <label> </label></td> <td> <label> </label> </td> </tr> 
          <tr>	

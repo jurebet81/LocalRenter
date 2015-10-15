@@ -7,8 +7,8 @@
        		<tr>
        			<td>
        				<label>Apartamento: </label>
-       				<?php echo $this->Form->input('apartament', array('label' => '', 'readonly' => 'readonly',
-       						'default'=>$contract['Apartament']['name']));?>        			
+       				<?php echo $this->Form->input('apartment', array('label' => '', 'readonly' => 'readonly',
+       						'default'=>$contract['Apartment']['name']));?>        			
        			</td>
        			<td>
        				<label>Pago desde: </label>

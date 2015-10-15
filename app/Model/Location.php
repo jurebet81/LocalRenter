@@ -17,8 +17,8 @@ class Location extends AppModel{
     public $displayField = 'name';
     
      public $hasMany = array(
-        'Apartament' => array(
-            'className' => 'Apartament'           
+        'Apartment' => array(
+            'className' => 'Apartment'           
             )        
     );
      

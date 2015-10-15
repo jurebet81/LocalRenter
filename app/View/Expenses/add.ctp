@@ -6,7 +6,7 @@
         <label>Ubicaci&oacute;n: </label>
             <?php echo $this->Form->input('location_id', array ('label' => ''));?> <br>        
         <label>Apartamento:</label>
-            <?php echo $this->Form->input('apartament_id', array ('label' => '')); ?> <br>  
+            <?php echo $this->Form->input('apartment_id', array ('label' => '')); ?> <br>  
         <label>Valor : </label>
             <?php echo $this->Form->input('amount', array ('label' => ''));?> <br>           
         <label>Fecha: </label>
@@ -38,15 +38,15 @@
                         type: 'POST',  
                         dataType: 'json',
                         contentType : 'application/json; charset=utf-8',                      
-                        url: '/LocalRenter/Expenses/fetchApartaments/' + selectedLoc,   
+                        url: '/LocalRenter/Expenses/fetchApartments/' + selectedLoc,   
                         success: function (data){    
                             
-                            $('#ExpenseApartamentId').empty();                                                                             
-                            $.each(data,function(i,apartament){
-                                $('#ExpenseApartamentId').append("<option value='" + apartament['Apartament']['id'] + 
-                                        "'>" + apartament['Apartament']['name'] + "</option>")});                               
+                            $('#ExpenseApartmentId').empty();                                                                             
+                            $.each(data,function(i,apartment){
+                                $('#ExpenseApartmentId').append("<option value='" + apartment['Apartment']['id'] + 
+                                        "'>" + apartment['Apartment']['name'] + "</option>")});                               
                                         
-                            //$("#ExpenseApartamentId").trigger("change");                            
+                            //$("#ExpenseApartmentId").trigger("change");                            
                         },
                         error: function(e){                            
                             console.log(e);

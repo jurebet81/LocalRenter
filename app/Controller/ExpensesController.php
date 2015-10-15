@@ -133,15 +133,15 @@ class ExpensesController extends AppController {
             $this->layout = 'home';           
         }
         
-        public function fetchApartaments($id = null){
+        public function fetchApartments($id = null){
         
         	$paramsApar = array(
         			'conditions' => array(        					
-        					'Apartament.location_id' => $id),
+        					'Apartment.location_id' => $id),
         			'order' => array( 
-        					'Apartament.name' => 'DESC'));
+        					'Apartment.name' => 'DESC'));
         	
-        	$this->set('apartaments', $this->Expense->Apartament->find('all',$paramsApar));
+        	$this->set('apartments', $this->Expense->Apartment->find('all',$paramsApar));
         
         }
         

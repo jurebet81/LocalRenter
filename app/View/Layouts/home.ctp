@@ -56,7 +56,7 @@
                          array('controller' =>'expenses', 'action' => 'add'));?>
 		</li>
                 <li><?php echo $this->Html->link('Nuevo Apartam', 
-                         array('controller' =>'apartaments', 'action' => 'add'));?>
+                         array('controller' =>'apartments', 'action' => 'add'));?>
 		</li>
                 <li><?php echo $this->Html->link('Arrendatario', 
                          array('controller' =>'renters', 'action' => 'add'));?>

@@ -1,7 +1,7 @@
 <?php
 
-class Apartament extends AppModel {
-    public $name = "Apartament";
+class Apartment extends AppModel {
+    public $name = "Apartment";
     public $displayField = 'name';
     
     public $hasMany = array(

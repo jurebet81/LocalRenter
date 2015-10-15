@@ -1,12 +1,12 @@
 <?php
-class ApartamentsController extends AppController {
+class ApartmentsController extends AppController {
     
         public $helpers = array('Html','Form','Js' => array('Jquery'));
         public $components = array('Session','RequestHandler'); 
         
         public $paginate = array(
             'limit' => 15,
-            'order' => array('Apartament.name' => 'asc'),
+            'order' => array('Apartment.name' => 'asc'),
         );
         
 	public function index(){	
@@ -28,7 +28,7 @@ class ApartamentsController extends AppController {
                 //date_default_timezone_set('America/New_York'); 				
                 //$today = getdate();
                 //$this->request->data['Product']['date_submitted'] = $today['year'] . '-' . $today['mon'] . '-' . $today['mday'];              
-                if ($this->Apartament->save($this->request->data)){
+                if ($this->Apartment->save($this->request->data)){
                     $this->Session->setFlash("<div class = 'info'>Apartamento ingresado correctamente.</div>");
                     $this->redirect(array('action' => 'add'));
                 }else{
@@ -40,8 +40,8 @@ class ApartamentsController extends AppController {
                 $params = array('order' => array( //contidion is defined to find apartamens in ascencdent order
                 'Location.name' => 'ASC'));
             
-                $this->log( $this->Apartament->Location->find('list',$params));            
-                $this->set('locations', $this->Apartament->Location->find('list',$params));  //send apartaments to populate dropdownlist
+                $this->log( $this->Apartment->Location->find('list',$params));            
+                $this->set('locations', $this->Apartment->Location->find('list',$params));  //send apartments to populate dropdownlist
             }            
             $this->layout = 'home';
         }
@@ -84,13 +84,13 @@ class ApartamentsController extends AppController {
             $this->layout = 'ajax';            
         }
         
-        public function custoValidation($apartament){
+        public function custoValidation($apartment){
            
            $message=null;
            
-           if (!is_numeric($apartament['Apartament']['rent_price'])){
+           if (!is_numeric($apartment['Apartment']['rent_price'])){
                $message = 'Valor de Renta: Debe ingresar valor númerico.';
-           }else if($apartament['Apartament']['rent_price'] < 1){
+           }else if($apartment['Apartment']['rent_price'] < 1){
                $message = 'Valor de Renta: Debe ser un valor mayor a 0.';           
            }       
            return $message;            

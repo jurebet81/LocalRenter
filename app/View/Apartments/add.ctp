@@ -1,6 +1,6 @@
 <div class="add">
     
-    <?php echo $this->Form->create('Apartament') ?>
+    <?php echo $this->Form->create('Apartment') ?>
     <fieldset>
         <legend> Nuevo Apartamento </legend>
         
