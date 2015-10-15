@@ -1,13 +1,19 @@
 <div class="edit">
 
     <fieldset>
-        <legend>Actualizar Producto</legend>
-        <?php echo $this->Form->create('Product', array ('action' => 'edit')); ?>
-        <label>Nombre:</label><?php echo $this->Form->input('name', array ('label' => '')); ?>
-        <label>Precio Unitario:</label><?php echo $this->Form->input('unit_price', array ('label' => ''));   ?>   
-        <label>Informaci&oacuten Adicional:</label><?php echo $this->Form->input('observations', array ('label' => '')); ?>
-        <?php echo $this->Form->input('id', array('type' => 'hidden')); ?>
-        <?php echo $this->Form->end("Actualizar Producto"); ?>
-    </fieldset>
+     <legend>Modificar datos de Apartamento </legend>	
+    	<?php echo $this->Form->create('Apartment', array ('action' => 'edit'));?>  
+        <label>UBICACI&Oacute;N :</label>
+            <?php echo $this->Form->input('Location.name',  array ('label' => '', 'readonly' => 'readonly'));?><br> 
+        <label>NOMBRE DEL APARTAMENTO:</label>
+            <?php echo $this->Form->input('name', array ('label' => '')); ?><br>        	
+		<label>DIRECCI&Oacute;N:</label>
+            <?php echo $this->Form->input('address', array('label' => '', 'type'=>'text'))?><br>
+        <label>VALOR DE ARRENDAMIENTO:</label>
+            <?php echo $this->Form->input('rent_price', array('label' => '', 'type'=>'text'))?><br>
+        <label>INFORMACI&Oacute;N ADICIONAL: </label>
+            <?php echo $this->Form->input('observations', array('label' => ''))?>  
+    </fieldset>    
+     <?php echo $this->Form->end(" Actualizar "); ?>
     
 </div>

@@ -37,19 +37,19 @@ class ExpensesController extends AppController {
 	public function index(){	
              
             if ($this->request->is('post')){                 
-                $this->redirect(array('controller' => 'purchases', 'action' => 'view'));                 
+                $this->redirect(array('controller' => 'expenses', 'action' => 'view'));                
                 
-            }else{
-                
-                $params = array('order' => array( //contidion is defined to find providers in ascencdent order
-                'Provider.name' => 'ASC'),
-                );
-                $providers = array('-1' => '');
-                array_push($providers, $this->Purchase->Provider->find('list',$params));             
-                $this->set('providers', $providers);                
-                
-                $purchases = $this->paginate(array ('conditions'=>$this->cond));
-                $this->set('purchases',$purchases);  
+            }else{                
+                              	
+                $locations = array('-1' => '');
+            	$paramsLoc = array(
+            			'order' => array( //contidion is defined to find apartamens in ascencdent order
+            					'Location.name' => 'ASC'));
+            	
+            	$this->loadModel('Location');
+            	array_push($locations, $this->Location->find('list',$paramsLoc));
+            	$this->set('locations',$locations);
+            	 
             }                       
            
             $this->layout = 'home';
@@ -89,17 +89,18 @@ class ExpensesController extends AppController {
         public function view(){  
             $fromDate = '';
             $toDate = '';
-            $provider_id = -1;
-            
+            $provider_id = -1;            
                         
             if ($this->request->is('post')){ 
+            	
                 $data = $this->request->data; 
                 
-                $fromDate = $data['Purchase']['FromDate'];
-                $toDate = $data['Purchase']['ToDate'];
-                $provider_id = $data['Purchase']['provider_id'];                                  
+                $fromDate = $data['Expense']['FromDate'];
+                $toDate = $data['Expense']['ToDate'];
+                $location_id = $data['Expense']['location_id'];  
+                $apartment_id = $data['Expense']['apartment_id'];
                 
-                $conditions = $this->findConditions($fromDate,$toDate,$provider_id);  
+                $conditions = $this->findConditions($fromDate,$toDate,$location_id,$apartment_id);  
                 
                 $this->Session->write('conditionsP', $conditions);
                 
@@ -162,23 +163,28 @@ class ExpensesController extends AppController {
         }
              
         
-        public function findConditions($fromDate,$toDate,$provider_id){
+        public function findConditions($fromDate,$toDate,$location_id,$apartment_id){
             $conditions = '';
+            
+            if ($location_id > 0 && $apartment_id < 1){
+            	//buscar los id de location
+            }
+            
             if ($fromDate!='' && $toDate != ''){
-                    $fromDate = date('Y-m-d',strtotime($fromDate));
-                    $toDate = date('Y-m-d',strtotime($toDate)); 
-                    $conditions = "Purchase.date_delivered >= " . "'" . $fromDate . "'" . 
-                            " AND Purchase.date_delivered <= " . "'" . $toDate . "'";
+                $fromDate = date('Y-m-d',strtotime($fromDate));
+                $toDate = date('Y-m-d',strtotime($toDate)); 
+                $conditions = "Expense.date >= " . "'" . $fromDate . "'" . 
+                        " AND Expense.date <= " . "'" . $toDate . "'";
+                
+                if ($location_id >0 && $apartment_id > 0){ //Date, apartment
+                 	$conditions .= " AND Expense.apartment_id = '" . apartment_id . "'";
+                }else if($location_id >0 && $apartment_id < 1){
+                	
+                }
+                    
             }  
                 
-            if ($provider_id >0 && strlen($conditions)>0){
-                $conditions = $conditions . " AND Purchase.provider_id = '" . 
-                        $provider_id . "'";
-                    
-            }else if ($provider_id>0){
-                $conditions = $conditions . "Purchase.provider_id = '" . 
-                        $provider_id . "'";
-            }
+            
             
             return $conditions;                
                 

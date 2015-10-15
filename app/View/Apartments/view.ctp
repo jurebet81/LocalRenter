@@ -1,26 +1,26 @@
 <div class="view">
     
-    <h3>INVENTARIO DE PRODUCTOS</h3>
+    <h3>REPORTE DE APARTAMENTOS</h3>
     <table class ="tablesummary">
         <tr>
-            <th><?php echo $this->Paginator->sort('id','ID'); ?></th>
-            <th><?php echo $this->Paginator->sort('name','NOMBRE'); ?></th>
-            <th><?php echo $this->Paginator->sort('amount','CANTIDAD'); ?></th>
-            <th><?php echo $this->Paginator->sort('unit_price','PRECIOUNI.'); ?></th>
-            <th><?php echo $this->Paginator->sort('date_submitted','FECHAINGR'); ?></th>
-            <th>OBSERVACIONES</th>
+            <th><?php echo $this->Paginator->sort('Apartment.id','ID'); ?></th>
+            <th><?php echo $this->Paginator->sort('Locat.name','UBICACION'); ?></th>
+            <th><?php echo $this->Paginator->sort('Apartment.name','NOMBRE'); ?></th>
+            <th>DIRECCI&Oacute;N</th>
+            <th><?php echo $this->Paginator->sort('Apartment.rent_price','PRECIO_ARR.'); ?></th>
+            <th><?php echo $this->Paginator->sort('Apartment.available','DISPONIBLE'); ?></th>
             <th>EDITAR</th>            
         </tr>
-        <?php foreach ($products as $product){ ?>
+        <?php foreach ($apartments as $apartment){ ?>
         <tr>
-            <td><?php echo h($product['Product']['id']); ?></td>
-            <td><?php echo h($product['Product']['name']); ?></td>
-            <td><?php echo h($product['Product']['amount']); ?></td>
-            <td><?php echo h($product['Product']['unit_price']); ?></td>
-            <td><?php echo h($product['Product']['date_submitted']); ?></td>
-            <td><?php echo h($product['Product']['observations']); ?></td>
+            <td><?php echo h($apartment['Apartment']['id']); ?></td>
+            <td><?php echo h($apartment['Locat']['name']); ?></td>
+            <td><?php echo h($apartment['Apartment']['name']); ?></td>
+            <td><?php echo h($apartment['Apartment']['address']); ?></td>
+            <td><?php echo number_format(h($apartment['Apartment']['rent_price']), 0, '.', '.'); ?></td>
+            <td><?php echo h($apartment['Apartment']['available']); ?></td>
             <td><?php echo $this->Html->image('edit-icon.png', array ('alt' =>'CakePHP', 'url' =>
-                    array ('action' => 'edit', $product['Product']['id'])
+                    array ('action' => 'edit', $apartment['Apartment']['id'])
                          ));
                  ?>
             </td>

@@ -1,15 +1,23 @@
 <div class="edit">
 
     <fieldset>
-        <legend>Modificar Contrato</legend>
+        <legend>Modificar Contrato</legend>        
+        <?php echo $this->Form->create('Lease', array ('action' => 'edit'));?>               
         
-        <?php echo $this->Form->create('Lease', array ('action' => 'edit'));?>
-        
-        	<label>NOMBRE DEL INQUILINO:</label>
-            	<?php echo $this->Form->input('holder_name',  array ('label' => ''));?><br>
-        	<label>N&Uacute;MERO DE C&Eacute;DULA: </label>
-            	<?php echo $this->Form->input('holder_identification',  array ('label' => ''));?><br> 
-       	<table>
+        <label>NOMBRE DEL INQUILINO:</label>
+            <?php echo $this->Form->input('holder_name',  array ('label' => ''));?><br>
+            
+        <table>
+        	<tr>    	
+        	<td><label>N&Uacute;MERO DE C&Eacute;DULA: </label>
+            	<?php echo $this->Form->input('holder_identification',  array ('label' => ''));?>
+            </td>
+            <td><label>TEL&Eacute;FONO</label>
+            	<?php echo $this->Form->input('holder_phone',  array ('label' => ''));?>
+            </td>
+       	</tr>
+       	<tr id = "separator"> <td> <label></label></td> <td> <label> </label> </td> </tr>
+       	
        	<tr>
         	<td><label>UBICACI&Oacute;N:</label>
             	<?php echo $this->Form->input('Location.name',  array ('label' => '', 'readonly' => 'readonly'));?></td>

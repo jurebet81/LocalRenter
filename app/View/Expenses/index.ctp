@@ -3,28 +3,31 @@
         <legend>Filtros Consulta de Lotes</legend>  
             <?php echo $this->Form->create(array('action' => 'view'));?>
                 
-                <input type='checkbox' id='FbyProvider'> Buscar por Proveedor
-                    <?php echo $this->Form->input('provider_id', array ('label' => '','hidden'));?><br><br>
+                <input type='checkbox' id='FbyLocation'> POR UBICACI&Oacute;N:
+                    <?php echo $this->Form->input('location_id', array ('label' => '','hidden'));?><br><br>
                     
-                <input type="checkbox" id="FbyDate"> Buscar por Fecha                
+                <input type='checkbox' id='FbyApartment'> POR APARTAMENTO:
+                    <?php echo $this->Form->input('apartment_id', array ('label' => '','hidden'));?><br><br>
+                    
+                <input type="checkbox" id="FbyDate"> POR FECHA:            
                 <div id ="dateContainer">
                    <label>Desde:</label> <?php echo $this->Form->input('FromDate', array(
                         'class'=>'datepicker', 'type'=>'text','label'=>'', 'readonly' => 'readonly','default'=>'')); ?> 
                     
                    <label>Hasta:</label> <?php echo $this->Form->input('ToDate', array(
                         'class'=>'datepicker', 'type'=>'text','label'=>'', 'readonly' => 'readonly', 'default'=>'')); ?>      
-                </div>               
+                </div>   
+                
+                <?php echo $this->Form->End(' Consultar '); ?>             
     </fieldset>
-    <?php echo $this->Form->End(' Consultar '); ?> 
+    
 </div>
 
 
 <script language="javascript" type="text/javascript">	
             
-            $(document).ready(function(){
-                
-                $('#dateContainer').hide();
-                
+            $(document).ready(function(){                
+                $('#dateContainer').hide();                
                 $( "input.datepicker" ).datepicker({
                     dateFormat: 'dd-mm-yy',
                     yearRange: "-100:+50",
@@ -32,7 +35,7 @@
                     changeYear: true,
                     constrainInput: false,
                     showOn: 'both',
-                    buttonImage: "/StockApp/img/calendar.png",
+                    buttonImage: "/LocalRenter/img/calendar.png",
                     buttonImageOnly: true                    
                 });
                             
@@ -46,32 +49,76 @@
                     }
                 });
                 
-                $('#FbyProvider').change(function(){
+                $('#FbyLocation').change(function(){
                     
-                    if ($('#FbyProvider').prop('checked')){
-                        $('#PurchaseProviderId').show();                       
+                    if ($('#FbyLocation').prop('checked')){
+                        $('#ExpenseLocationId').show();                       
                     }else{
-                         $('#PurchaseProviderId').hide();
-                         $('#PurchaseProviderId').val('-1');
+                         $('#ExpenseLocationId').hide();
+                         $('#ExpenseLocationId').val('-1');
+                         $('#FbyApartment').prop('checked', false);
+                         $('#ExpenseApartmentId').hide();
+                         $('#ExpenseApartmentId').val('-1');
                     }
                 });
+
+				$('#FbyApartment').change(function(){                    
+                    if ($('#FbyApartment').prop('checked')){
+                    	$('#FbyLocation').prop('checked', true);
+                    	$('#ExpenseLocationId').show();  
+                        $('#ExpenseApartmentId').show();                       
+                    }else{
+                         $('#ExpenseApartmentId').hide();
+                         $('#ExpenseApartmentId').val('-1');
+                    }
+                });
+
+				$('#ExpenseLocationId').change(function(){                    
+                    var selectedLoc = $(this).val();   
+                    $.ajax({ 
+                        type: 'POST',  
+                        dataType: 'json',
+                        contentType : 'application/json; charset=utf-8',                      
+                        url: '/LocalRenter/Expenses/fetchApartments/' + selectedLoc,   
+                        success: function (data){    
+                            
+                            $('#ExpenseApartmentId').empty();                                                                             
+                            $.each(data,function(i,apartment){
+                                $('#ExpenseApartmentId').append("<option value='" + apartment['Apartment']['id'] + 
+                                        "'>" + apartment['Apartment']['name'] + "</option>")});                               
+                                        
+                                                     
+                        },
+                        error: function(e){                            
+                            console.log(e);
+                        }
+                   });
+                
+            	});                
                 
                 $('.submit').click(function(){
                     
-                    if ($('#FbyProvider').prop('checked')){     //valida que se ingresó un proveedor
-                        if ( $('#PurchaseProviderId').val()=== '-1'){
-                            alert('Debe seleccionar un proveedor');
+                    if ($('#FbyLocation').prop('checked')){     //valida que se ingresó un proveedor
+                        if ( $('#ExpenseLocationId').val()=== '-1'){
+                            alert('Debe seleccionar una ubicacion');
+                            return false;
+                        }
+                    }
+
+                    if ($('#FbyApartment').prop('checked')){     //valida que se ingresó un proveedor
+                        if ( $('#ExpenseApartmentId').val()=== '-1'){
+                            alert('Debe seleccionar un apartament');
                             return false;
                         }
                     }
                     
                     if ($('#FbyDate').prop('checked')){
                         
-                        if ( $('#PurchaseToDate').val()==='' || $('#PurchaseFromDate').val()===''){
+                        if ( $('#ExpenseToDate').val()==='' || $('#ExpenseFromDate').val()===''){
                             alert('Debe ingresar fechas correctas');
                             return false;
                         }
-                        if ($('#PurchaseToDate').val()<$('#PurchaseFromDate').val()){
+                        if ($('#ExpenseToDate').val()<$('#ExpenseFromDate').val()){
                             alert('La fecha final debe ser mayor que la fecha incial');
                             return false;
                         }

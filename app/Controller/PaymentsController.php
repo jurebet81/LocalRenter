@@ -16,7 +16,7 @@ class PaymentsController extends AppController{
     
     public function add($leaseId = null){
     	
-         if ($this->request->is('post')){         	
+        if ($this->request->is('post')){         	
              $message = null;
              
              date_default_timezone_set('America/New_York');
@@ -28,7 +28,7 @@ class PaymentsController extends AppController{
                  $this->Session->setFlash("<div class = 'err' >" . $message . "</div>");
                  $this->redirect(array('action' => 'add'));
                  return;
-             }   
+             }             
              
              if($this->Payment->save($this->request->data)){
                  $this->Session->setFlash("<div class = 'info'>Pago registrado con éxito.</div>");
@@ -37,18 +37,18 @@ class PaymentsController extends AppController{
                  $this->Session->setFlash("<div class = 'err'>Hubo un error, por favor contacte al administrador.</div>");
                  $this->redirect(array('action' => 'error'));
              }
-         } else {
+        } else {
          	
          	$this->loadModel('Lease');
          	$contract = $this->Lease->findById($leaseId);
-         	$this->set('contract',$contract);     	
+         	$this->set('contract',$contract);         	
          	
-         	
-         }    
-            $this->layout = 'home';	
+        }    
+        $this->layout = 'home';	
     }
         
     public function view(){
+    	
         $this->Provider->recursive = 0; 
         $providers = $this->paginate();
         if ($this->request->is('requested')){ //pregunta de eleeento

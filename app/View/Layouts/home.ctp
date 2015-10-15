@@ -73,11 +73,11 @@
                         <li><?php echo $this->Html->link('Arrendos', 
                             array('controller' =>'leases', 'action' => 'view'));?>
                         </li> 
-                        <li><?php echo $this->Html->link('Lotes', 
-                            array('controller' =>'purchases', 'action' => 'index'));?>
+                        <li><?php echo $this->Html->link('Gastos', 
+                            array('controller' =>'expenses', 'action' => 'index'));?>
                         </li> 
-                        <li><?php echo $this->Html->link('Inventario / Productos', 
-                            array('controller' =>'products', 'action' => 'view'));?>
+                        <li><?php echo $this->Html->link('Apartamentos', 
+                            array('controller' =>'apartments', 'action' => 'view'));?>
                         </li>
                         <li><?php echo $this->Html->link('Clientes', 
                             array('controller' =>'clients', 'action' => 'view'));?>
