@@ -262,7 +262,8 @@ textArea{
     background: url(../img/test-pass-icon.png) no-repeat 0 0;
     color:green;    
     padding-left: 20px;   
-    position: static;    
+    position: static; 
+    font-size: 16px;   
 }
 
 .uptodatepayment{

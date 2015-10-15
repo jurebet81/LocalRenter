@@ -140,8 +140,7 @@ class LeasesController extends AppController {
                 
         }
         
-        public function view(){
-           
+        public function view(){           
             
             if ($this->request->is('post')){ 
                 $data = $this->request->data; 
@@ -164,13 +163,14 @@ class LeasesController extends AppController {
                     $this->set('sales',$sales);         
                 }
             }else{
-                /*if ($this->Session->check('conditions')){                    
-                    $conditions = $this->Session->read('conditionsS');
-                    //$this->log($conditions);
-                } */                                                
-                //$this->cond = array ($conditions);                
-                $this->Lease->recursive = 0; 
-                //$this->paginate['conditions'] = $this->cond;
+            	
+            	$paramsLease = array(
+            			'conditions' => array(
+            					'Lease.status' => 'Activo'));
+            	
+                $this->paginate['conditions'] =  array('Lease.status' => 'Activo');
+                             
+                $this->Lease->recursive = 0;                 
                 $leases = $this->paginate();                               
                 if ($this->request->is('requested')){ //pregunta de eleeento
                     return $leases;
@@ -198,7 +198,13 @@ class LeasesController extends AppController {
         	 
         	$this->Lease->id = $id;
         	if ($this->request->is('get')){
-        		$this->request->data = $this->Lease->read();        		 
+        		$this->request->data = $this->Lease->read();   
+        		
+        		$this->loadModel('Location');
+        		$location = $this->Location->findById($this->request->data['Apartament']['location_id']);
+        		
+        		$this->request->data['Location'] = $location['Location'];
+        			 		 
         	}else{
         		//$message = $this->custoValidation($this->request->data);
         		$message = null;
@@ -206,7 +212,9 @@ class LeasesController extends AppController {
         			$this->Session->setFlash("<div class = 'err'>" . $message . "</div>");
         			$this->redirect(array('action' => 'edit', $this->Provider->id));
         		}
-        		 
+        		
+        		$this->request->data['Lease']['end_date'] = date('Y-m-d',strtotime($this->request->data['Lease']['end_date']));
+        		
         		if($this->Lease->save($this->request->data)){
         			$this->Session->setFlash("<div class = 'info'>Contrato actualizado con Èxito.</div>");
         			$this->redirect(array('action' => 'view'));
@@ -233,10 +241,28 @@ class LeasesController extends AppController {
                         $client_id . "'";
             }
             
-            return $conditions;                
+            return $conditions;               
                 
         }
         
+        public function close ($id){
+        	
+        	date_default_timezone_set('America/New_York');
+        	$today = getdate();
+        	$date = $today['year'] . '-' . $today['mon'] . '-' . $today['mday'];
+        	        	
+        	$this->Lease->read('id', $id); 
+        	$this->Lease->set(array(
+        			'status' => 'Inactivo',    //CLose lease.  
+        			'end_date' => $date,			
+        	));
+        	
+        	if($this->Lease->save()){
+        		$this->Session->setFlash("<div class = 'info'>Contrato cerrado con Èxito.</div>");
+        		$this->redirect(array('action' => 'view'));
+        	}        	
+        	
+        }        
         public function error(){
             $this->Session->setFlash("<div class = 'err'>Ocurri√≥ un error durante la acci√≥n solicitada,
                 vuelva a intetarlo, si el error persiste por favor contacte al administrador,

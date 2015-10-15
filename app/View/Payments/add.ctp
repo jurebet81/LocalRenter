@@ -7,12 +7,12 @@
        		<tr>
        			<td>
        				<label>Apartamento: </label>
-       				<?php echo $this->Form->input('apartament', array('label' => '', 
+       				<?php echo $this->Form->input('apartament', array('label' => '', 'readonly' => 'readonly',
        						'default'=>$contract['Apartament']['name']));?>        			
        			</td>
        			<td>
        				<label>Pago desde: </label>
-       				<?php echo $this->Form->input('from_date', array('type' => 'text', 'label' => '', 
+       				<?php echo $this->Form->input('from_date', array('type' => 'text', 'label' => '', 'readonly' => 'readonly',
        						'default'=>$contract['Lease']['last_payment_date']));?> 
        			</td>
        		</tr>   
@@ -20,7 +20,7 @@
        		<tr>
        			<td>
        			<label>Inquilino: </label>
-               <?php echo $this->Form->input('holder_name', array('label' => '',
+               <?php echo $this->Form->input('holder_name', array('label' => '', 'readonly' => 'readonly',
                		'default'=>$contract['Lease']['holder_name']));?>
                </td>
                <td>
@@ -29,7 +29,7 @@
        					$init_date = strtotime($contract['Lease']['last_payment_date']);
        					$to_date = strtotime("+1 month",$init_date);       				
        				?> 
-       				<?php echo $this->Form->input('to_date', array( 'type' => 'text', 'label' => '', 
+       				<?php echo $this->Form->input('to_date', array( 'type' => 'text', 'label' => '', 'readonly' => 'readonly',
        						'default'=>date('Y-m-d',$to_date)));?> 
        			</td>
        		</tr>       		

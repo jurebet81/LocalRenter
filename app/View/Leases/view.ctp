@@ -36,12 +36,12 @@
                 <?php echo $this->Html->image('printer-icon.png', array ('alt' =>'CakePHP', 'url' =>
                     array ('controller' => 'Leases', 'action' => 'download', $lease['Lease']['id'])
                          ));
-                ?>                                          
+                ?> <span class="CloseContractImg">                                        
                  <?php echo $this->Html->image('delete-icon.png', array ("alt" =>"CakePHP", 'url' =>
                     array ('controller' => 'Leases', 'action' => 'close', $lease['Lease']['id']),                    
                          ));
                  ?>
-                 
+                 	</span> 
             </td>
         </tr>
         <?php } ?>
@@ -58,6 +58,20 @@
         <?php echo $this->Paginator->prev('Anterior', array(), null, array('class' => 'disabled'));?>
         <?php echo $this->Paginator->numbers(array('separator' => '')); ?>
         <?php echo $this->Paginator->next('Siguiente', array(), null, array ('class' => 'disabled'));?>        
-    </div>    
+    </div>   
     
 </div>
+
+<script language="javascript" type="text/javascript">		
+             $(document).ready(function() {             	
+                $('.CloseContractImg').click(function(){                                        
+                	var answer = confirm("¿Esta Seguro que desea cerrar el contrato?"); 
+                	if (answer==false){
+                	    return false;
+                	}                	                
+            });   
+            
+                   
+            });
+           
+</script>

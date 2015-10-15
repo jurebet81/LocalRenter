@@ -2,37 +2,42 @@
      
     <?php echo $this->Form->create('Lease') ?>
     <fieldset>
-        <legend> Contrato de Arrendamiento </legend> 
-         <label>Nombre del Inquilino:</label>
-            <?php echo $this->Form->input('holder_name',  array ('label' => ''));?><br>
-        <label>C&eacute;dula del Inquilino: </label>
-            <?php echo $this->Form->input('holder_identification',  array ('label' => ''));?><br> 
-        <label>Ubicaci&oacute;n:</label>
-            <?php echo $this->Form->input('location_id',  array ('label' => ''));?><br>
-        <label>Apartamento a tomar:</label>
-            <?php echo $this->Form->input('apartament_id',  array ('label' => ''));?><br>  
-        <label>Valor Arriendo acordado:</label>
-            <?php echo $this->Form->input('amount',  array ('label' => ''));?><br>  
-        <label>Arrendatario:</label>
-            <?php echo $this->Form->input('renter_id',  array ('label' => ''));?><br>      
-        <label>Fecha de inicio de Arriendo:</label>
-            <?php echo $this->Form->input('init_date', array('class'=>'datepicker', 'type'=>'text','label'=>'', 'readonly' => 'readonly' )); ?>  <br>
-        <label>Fecha de fin de Arriendo:</label>
-            <?php echo $this->Form->input('end_date', array('class'=>'datepicker', 'type'=>'text','label'=>'', 'readonly' => 'readonly' )); ?>  <br>
-           
-             <?php /*echo $this->Form->input('Frecuency', array('type' => 'radio', 'options' => array('Mensual' => 'Mensual','Semanal' => 'Semanal'),
-    				'class' => 'testClass',
-    				'selected' => 'Mensual',
-    				'before' => '<div class="testOuterClass">',
-    				'after' => '</div>',
-    				'hiddenField' => false,)); // added for non-first elements	*/	?>				
-		
-        <label>Informaci&oacuten Adicional:</label>       
-            <?php echo $this->Form->input('observations', array ('label' => ' ')); ?>        
-    </fieldset>
-         
+        <legend> Contrato de Arrendamiento </legend>       
         
-    <?php echo $this->Form->end('Arrendar'); ?>
+        	<label>NOMBRE DEL INQUILINO:</label>
+            	<?php echo $this->Form->input('holder_name',  array ('label' => ''));?><br>
+        	<label>N&Uacute;MERO DE C&Eacute;DULA: </label>
+            	<?php echo $this->Form->input('holder_identification',  array ('label' => ''));?><br> 
+       	<table>
+       	<tr>
+        	<td><label>UBICACI&Oacute;N:</label>
+            	<?php echo $this->Form->input('location_id',  array ('label' => ''));?></td>
+        	<td><label>APARTAMENTO A TOMAR:</label>
+            	<?php echo $this->Form->input('apartament_id',  array ('label' => ''));?></td> 
+        </tr>
+        <tr> <td> <label> </label></td> <td> <label> </label> </td> </tr> 
+         <tr>	
+        	<td><label>VALOR DE ARRIENDO:</label>
+            	<?php echo $this->Form->input('amount',  array ('label' => ''));?></td>  
+        	<td><label>ARRENDATARIO:</label>
+            	<?php echo $this->Form->input('renter_id',  array ('label' => ''));?></td>
+        </tr> 
+        <tr> <td> <label> </label></td> <td> <label> </label> </td> </tr>    	
+        <tr>     
+        	<td><label>FECHA INICIO DE CONTRATO:</label>
+            	<?php echo $this->Form->input('init_date', array('class'=>'datepicker', 'type'=>'text','label'=>'', 'readonly' => 'readonly' )); ?></td> 
+        	<td><label>FECHA FIN DE CONTRATO:</label>
+            	<?php echo $this->Form->input('end_date', array('class'=>'datepicker', 'type'=>'text','label'=>'', 'readonly' => 'readonly' )); ?> </td>
+        </tr>
+        <tr> <td> <label> </label></td> <td> <label> </label> </td> </tr>               
+      	</table>
+      	
+      	<label>INFORMACI&Oacute;N ADICIONAL:</label>       
+            	<?php echo $this->Form->input('observations', array ('label' => ' ')); ?>  
+            	
+          <?php echo $this->Form->end('Ingresar Contrato'); ?>     
+    </fieldset>       
+    
 </div>
 
  <script language="javascript" type="text/javascript">
@@ -85,4 +90,4 @@
             $("#LeaseLocationId").trigger("change");            
             });
            
-        </script>
+</script>
