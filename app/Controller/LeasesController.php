@@ -205,7 +205,7 @@ class LeasesController extends AppController {
         
         	if ($this->request->is('post')){
         		$this->Session->write('ProfitFilters', $this->request->data);
-        		$this->redirect(array('controller' => 'sales', 'action' => 'profitdetails'));
+        		$this->redirect(array('action' => 'profitdetails'));
         
         	}else{
         		$year = 2015;
@@ -232,6 +232,81 @@ class LeasesController extends AppController {
         
         	$this->layout = 'home';
         }
+
+        public function profitdetails(){
+        
+        	$profitdetails = array();
+        
+        	if ($this->Session->check('ProfitFilters')){
+        		$filters = $this->Session->read('ProfitFilters');
+        	}else{
+        		$this->redirect(array('action' => 'profits'));
+        	}
+        	
+        	$this->log($filters);
+        	
+        	$year = $filters['Lease']['year'];
+        	$month = $filters['Lease']['month'];
+        	$location_id = $filters['Lease']['location_id'];
+        	$apartment_id = $filters['Lease']['apartment_id'];
+        
+        	
+        	if ($year > 2014 && $month > 0)  {
+        
+        		$profitdetail = $this->getProfitByMonth($year,$month,$location_id,$apartment_id);
+        		array_push($profitdetails, $profitdetail);
+        
+        	}else if ($year > 2014 && $month < 1) {
+        		for ($imonth=1;$imonth<13;$imonth++){
+        			$profitdetail = $this->getProfitByMonth($year,$imonth,$location_id,$apartment_id);
+        			array_push($profitdetails, $profitdetail);
+        		}
+        	}
+        	        
+        	$this->set('profits',$profitdetails);
+        	
+        	$this->layout = 'home';
+        }
+        
+        public function getProfitByMonth($year,$month,$location_id,$apartment_id){
+        
+        	$i_date = strtotime($year . "-" . $month . "-01");
+        	$l_date = strtotime("+1 month",$i_date);
+        
+        	$last_date = date('Y-m-d',strtotime("-1 day",$l_date));
+        	$init_date = date('Y-m-d',$i_date);
+        
+        	$querySale = "SELECT SUM(d.total_price) as Total FROM sales s, saledetails d "
+        			. "WHERE s.id = d.sale_id and s.date between "
+        					. "'" . $init_date . "' and '" . $last_date . "'";
+        
+        	$queryPurchase = "SELECT SUM(d.total_price) as Total FROM purchases p, purchasedetails d "
+        			. "WHERE p.id = d.purchase_id and p.date_delivered between "
+        					. "'" . $init_date . "' and '" . $last_date . "'";
+        
+        	if ($product>0){
+        		$querySale .= " AND d.product_id = " . $product;
+        		$queryPurchase .= " AND d.product_id = " . $product;
+        	}
+        
+        	$saleArray = $this->Sale->query($querySale);
+        	$sale = $saleArray[0][0]['Total'];
+        	$purchaseArray =  $this->Sale->query($queryPurchase);
+        	$purchase = $purchaseArray[0][0]['Total'];
+        
+        	if ($sale==''){
+        		$sale = 0;
+        	}
+        	if ($purchase==''){
+        		$purchase = 0;
+        	}
+        
+        	$profitdetail = array($this->months[$month] . "/" . $year =>
+        			array('Sales' => $sale, 'Purchases' => $purchase, 'Profits' => $sale - $purchase));
+        
+        	return $profitdetail;
+        }
+        
         
         private function custoValidation($newSale){
            

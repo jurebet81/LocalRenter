@@ -1,7 +1,7 @@
 <div class="formFilter">     
     <fieldset>
         <legend>Filtros Consulta de Utilidades</legend>  
-            <?php echo $this->Form->create(array('action' => 'profit'));?>
+            <?php echo $this->Form->create(array('action' => 'profits'));?>
                 <label>A&Ntilde;O : </label>                
                 <?php echo $this->Form->input('year', array ('label' => ''));?> <br> <br>              
             <label>MES : </label>
