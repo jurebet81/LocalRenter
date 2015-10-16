@@ -3,16 +3,16 @@
     <?php echo $this->Form->create('Expense') ?>
     <fieldset>
         <legend> Ingresar Gastos </legend>        
-        <label>Ubicaci&oacute;n: </label>
+        <label>UBICACI&Oacute;N: </label>
             <?php echo $this->Form->input('location_id', array ('label' => ''));?> <br>        
-        <label>Apartamento:</label>
+        <label>APARTAMENTO:</label>
             <?php echo $this->Form->input('apartment_id', array ('label' => '')); ?> <br>  
-        <label>Valor : </label>
+        <label>VALOR : </label>
             <?php echo $this->Form->input('amount', array ('label' => ''));?> <br>           
-        <label>Fecha: </label>
+        <label>FECHA: </label>
             <?php echo $this->Form->input('date', array(
                 'class'=>'datepicker', 'type'=>'text','label'=>'','readonly' => 'readonly' )); ?> <br> 
-        <label>Descripci&oacute;n del Gasto:</label>
+        <label>DESCRIPCI&Nacute;N DEL GASTO:</label>
         <?php echo $this->Form->input('description', array ('label' => '')); ?>
     </fieldset>
     <?php echo $this->Form->end('Acentar Gasto'); ?>
@@ -22,7 +22,7 @@
            
              $(document).ready(function() {                 
                 $( "input.datepicker" ).datepicker({                    
-                    dateFormat: 'dd-mm-yy',
+                    dateFormat: 'yy-mm-dd',
                     yearRange: "-100:+50",
                     changeMonth: true,
                     changeYear: true,

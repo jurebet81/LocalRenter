@@ -25,9 +25,23 @@
                </td>
                <td>
        				<label>PAGO HASTA: </label>
-       				<?php 
-       					$init_date = strtotime($contract['Lease']['last_payment_date']);
-       					$to_date = strtotime("+1 month",$init_date);       				
+       				<?php  //Validación de fehcas oorrectas de ultimo mes 
+	       				$paymentdate = date_parse($contract['Lease']['init_date']); 
+	       				$paymentday = $paymentdate['day'];
+	       				$lastpaymentdate = date_parse($contract['Lease']['last_payment_date']);
+	       				$paymentyear = $lastpaymentdate["year"];       				
+	       				
+	       				if ($lastpaymentdate["month"]==12){
+	       					$nextpaymonth = 1;
+	       					$paymentyear++;
+	       				}else{
+	       					$nextpaymonth = $lastpaymentdate['month']+1;
+	       				}						       			           			 
+	       				while (checkdate($nextpaymonth, $paymentday, $paymentyear )==false){
+	       					$paymentday--;
+	       				}	       				
+	       				$to_date = strtotime($paymentyear . '-' . $nextpaymonth . '-' . $paymentday);
+       				      				      				     				
        				?> 
        				<?php echo $this->Form->input('to_date', array( 'type' => 'text', 'label' => '', 'readonly' => 'readonly',
        						'default'=>date('Y-m-d',$to_date)));?> 

@@ -1,40 +1,38 @@
 <div class="view">
     
-    <h3>LISTA DE LOTES</h3>
+    <h3>LISTA DE GASTOS</h3>
     <table class ="tablesummary">
         <tr>
             <th><?php echo $this->Paginator->sort('id', 'ID')?></th>
-            <th><?php echo $this->Paginator->sort('Provider.name', 'PROVEEDOR')?></th>
-            <th><?php echo $this->Paginator->sort('id_invoice', 'FACTURA NRO')?></th>
-            <?php //echo $this->Paginator->sort('date_requested', 'FECHA DE PEDIDO')?>
-            <th><?php echo $this->Paginator->sort('date_delivered', 'FECHA DE ENTREGA')?></th>
-            <th>VALOR TOTAL</th>            
+            <th><?php echo $this->Paginator->sort('Apto.name', 'APARTAMENTO')?></th>
+            <th>POR CONCEPTO DE:</th> 
+            <th><?php echo $this->Paginator->sort('amount', 'VALOR')?></th>
+            <th><?php echo $this->Paginator->sort('date', 'FECHA')?></th>                      
             <th>ACCIONES</th>            
         </tr>
-        <?php $totalPurchases = 0; ?>
-        <?php //$dataQuery = array_pop($purchases); ?>
-        <?php //echo($dataQuery['fDate']); ?>
-        <?php foreach ($purchases as $purchase){ ?>
+        <?php $totalExpenses = 0; ?>
+        
+        <?php foreach ($expenses as $expense){ ?>
         <tr>
-            <td><?php echo h($purchase['Purchase']['id']); ?></td>
-            <td><?php echo h($purchase['Pr']['name']); ?></td>   
-            <td><?php echo h($purchase['Purchase']['id_invoice']); ?></td>
-            <?php //echo h($purchase['Purchase']['date_requested']); ?>
-            <td><?php echo h($purchase['Purchase']['date_delivered']); ?></td>
-            <td id="pesosValue"><?php echo number_format(h($purchase['0']['total']), 0, '.', '.'); ?></td>            
-            <td><?php echo $this->Html->image('details-icon.png', array ('alt' =>'CakePHP', 'url' =>
-                    array ('controller' => 'Purchasedetails', 'action' => 'view', $purchase['Purchase']['id'])
+            <td><?php echo h($expense['Expense']['id']); ?></td>
+            <td><?php echo h($expense['Apto']['name']); ?></td>   
+            <td><?php echo h($expense['Expense']['description']); ?></td>  
+            <td><?php echo h($expense['Expense']['date']); ?></td>   
+            <td><?php echo number_format(h($expense['Expense']['amount']), 0, '.', '.');  ?></td>          
+            <td>
+            	<?php echo $this->Html->image('edit-icon.png', array ('alt' =>'CakePHP', 'url' =>
+                    array ('controller' => 'Expenses', 'action' => 'edit', $expense['Expense']['id'])
+                         ));
+                 ?>                 
+            	<?php echo $this->Html->image('delete-icon.png', array ('alt' =>'CakePHP', 'url' =>
+                    array ('controller' => 'Expenses', 'action' => 'remove', $expense['Expense']['id'])
                     
                          ));
-                ?>            
-                <?php echo $this->Html->image('edit-icon.png', array ('alt' =>'CakePHP', 'url' =>
-                    array ('controller' => 'Purchasedetails', 'action' => 'add', $purchase['Purchase']['id'])
-                         ));
-                 ?>
+                ?>       
             </td>
         </tr>
         <?php 
-            $totalPurchases = $totalPurchases + h($purchase['0']['total']);
+            $totalExpenses += h($expense['Expense']['amount']);
         } ?>
         <tr> 
             <td></td><td></td><td></td>
@@ -42,7 +40,7 @@
                 Total
             </td>
             <td id ='totalvalue'>
-                <div id = "pesosValue"><?php echo number_format($totalPurchases, 0, '.', '.'); ?> </div>
+                <div id = "pesosValue"><?php echo number_format($totalExpenses, 0, '.', '.'); ?> </div>
             </td>
             <td></td>        
         </tr>
@@ -52,8 +50,9 @@
                 array('format' => 'Página {:page} de {:pages}, mostrando {:current} registros de {:count}') //paginacion
             );
         ?>
-    </p>
+    </p>    
     
+    <?php echo $this->element('sql_dump');?>
     <div class='pagination'>
         
         <?php echo $this->Paginator->prev('Anterior', array(), null, array('class' => 'disabled'));?>

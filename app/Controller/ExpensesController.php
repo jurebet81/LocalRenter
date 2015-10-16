@@ -8,30 +8,22 @@ class ExpensesController extends AppController {
                 
         public $paginate = array(  //join for retrieve purchase details and prices...
             'fields' => array(
-                'Purchase.id', 
-                'Pr.name',
-                'Purchase.id_invoice',
-                //'Purchase.date_requested',
-                'Purchase.date_delivered',
-                'SUM(Purchasedetails.total_price) AS total',
-                'Purchase.observations',               
-            ),
-            'group' => array('Purchasedetails.purchase_id'),
+                'Expense.id', 
+                'Apto.name',
+            	'Expense.description',
+                'Expense.amount',
+                'Expense.date',  
+            ),            
             'recursive' => 0,
             'limit' => 15,
-            'joins' => array(                
+            'joins' => array(  
                     array (
-                        'table' => 'purchasedetails',
-                        'alias' => 'Purchasedetails',
-                        'conditions' => array('Purchasedetails.purchase_id = Purchase.id')
-                    ),
-                    array (
-                        'table' => 'providers',
-                        'alias' => 'Pr',
-                        'conditions' => array('Pr.id = Purchase.provider_id')
+                        'table' => 'apartments',
+                        'alias' => 'Apto',
+                        'conditions' => array('Apto.id = Expense.apartment_id')
                     ), 
             ),            
-            'order' => array('Purchase.date_delivered' => 'desc'),             
+            'order' => array('Expense.date' => 'DESC'),             
         );
         
 	public function index(){	
@@ -89,46 +81,49 @@ class ExpensesController extends AppController {
         public function view(){  
             $fromDate = '';
             $toDate = '';
-            $provider_id = -1;            
+            $location_id = -1;   
+            $apartment_id = -1;
                         
             if ($this->request->is('post')){ 
             	
-                $data = $this->request->data; 
+                $data = $this->request->data;                  
+                           
+	            $fromDate = $data['Expense']['FromDate'];
+	            $toDate = $data['Expense']['ToDate'];
+	            $location_id = $data['Expense']['location_id'];  
+	            $apartment_id = $data['Expense']['apartment_id'];
                 
-                $fromDate = $data['Expense']['FromDate'];
-                $toDate = $data['Expense']['ToDate'];
-                $location_id = $data['Expense']['location_id'];  
-                $apartment_id = $data['Expense']['apartment_id'];
                 
                 $conditions = $this->findConditions($fromDate,$toDate,$location_id,$apartment_id);  
-                
-                $this->Session->write('conditionsP', $conditions);
+                                
+                $this->Session->write('conditions', $conditions);
                 
                 $this->cond = array ($conditions);
                 $this->paginate['conditions'] = $this->cond;  
-                $purchases = $this->paginate();  
-                //array_push($purchases, array('fDate' => $fromDate,'tDate' => $toDate,'provider' => $provider_id));
-                
+                $expenses = $this->paginate();  
+                                
                 if ($this->request->is('requested')){   //pregunta de eleeento
-                    return $purchases;
+                    return $expenses;
                 }else{
-                    $this->set('purchases',$purchases);         
+                    $this->set('expenses',$expenses);         
                 }
+                               
+                
             }else{
+            	
                 if ($this->Session->check('conditions')){                    
-                    $conditions = $this->Session->read('conditionsP');
-                    //$this->log($conditions);
+                    $conditions = $this->Session->read('conditions');                   
                 }
                                                  
                 $this->cond = array ($conditions);                
-                $this->Purchase->recursive = 0; 
+                $this->Expense->recursive = 0; 
                 $this->paginate['conditions'] = $this->cond;
-                $purchases = $this->paginate();
+                $expenses = $this->paginate();
                                
                 if ($this->request->is('requested')){ //pregunta de eleeento
-                    return $purchases;
+                    return $expenses;
                 }else{
-                    $this->set('purchases',$purchases);                
+                    $this->set('expenses',$expenses);                
                 }                 
             }
             $this->layout = 'home';           
@@ -163,28 +158,52 @@ class ExpensesController extends AppController {
         }
              
         
-        public function findConditions($fromDate,$toDate,$location_id,$apartment_id){
+        private function findConditions($fromDate,$toDate,$location_id,$apartment_id){
             $conditions = '';
             
             if ($location_id > 0 && $apartment_id < 1){
-            	//buscar los id de location
+            	
+            	$this->loadModel('Apartment');  //Busca los Ids de la ubicacón seleccionada
+            	$apartmentIds = $this->Apartment->find('list', array(
+        			'fields' => array('Apartment.id'),
+        			'conditions' => array('Apartment.location_id' => $location_id),
+        			'recursive' => 0
+    			));            	
             }
             
             if ($fromDate!='' && $toDate != ''){
+            		            	
                 $fromDate = date('Y-m-d',strtotime($fromDate));
                 $toDate = date('Y-m-d',strtotime($toDate)); 
                 $conditions = "Expense.date >= " . "'" . $fromDate . "'" . 
                         " AND Expense.date <= " . "'" . $toDate . "'";
                 
-                if ($location_id >0 && $apartment_id > 0){ //Date, apartment
-                 	$conditions .= " AND Expense.apartment_id = '" . apartment_id . "'";
-                }else if($location_id >0 && $apartment_id < 1){
+                if ($location_id >0 && $apartment_id > 0){ //by Date, apartment
+                 	$conditions .= " AND Expense.apartment_id = '" . $apartment_id . "'";
+                 	
+                }else if($location_id >0 && $apartment_id < 1){ //by Location
                 	
+                	$conditions .= " AND Expense.apartment_id IN ('" . array_shift($apartmentIds) . "'"; //toma el primer elmento de los array
+                	foreach($apartmentIds as $idApto){
+                		$conditions .= ",'" . $idApto . "'";
+                	}
+                	$conditions .= ")";                	
                 }
-                    
-            }  
-                
+            } 
             
+            if ($fromDate == '' && $toDate == ''){ //Without dates            
+            	if ($location_id >0 && $apartment_id > 0){ //by apartment
+            		$conditions .= "Expense.apartment_id = '" . $apartment_id . "'";
+            
+            	}else if($location_id >0 && $apartment_id < 1){ //by Location
+            		 
+            		$conditions .= "Expense.apartment_id IN ('" . array_shift($apartmentIds) . "'"; //toma el primer elmento de los array
+            		foreach($apartmentIds as $idApto){
+            			$conditions .= ",'" . $idApto . "'";
+            		}
+            		$conditions .= ")";
+            	}
+            }
             
             return $conditions;                
                 

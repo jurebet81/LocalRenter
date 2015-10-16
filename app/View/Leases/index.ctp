@@ -26,7 +26,7 @@
                 $('#dateContainer').hide();
                 
                 $( "input.datepicker" ).datepicker({
-                    dateFormat: 'dd-mm-yy',
+                    dateFormat: 'yy-mm-dd',
                     yearRange: "-100:+50",
                     changeMonth: true,
                     changeYear: true,

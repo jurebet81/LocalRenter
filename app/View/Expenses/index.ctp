@@ -1,6 +1,6 @@
 <div class="formFilter">     
     <fieldset>
-        <legend>Filtros Consulta de Lotes</legend>  
+        <legend>Filtros Consulta Gastos</legend>  
             <?php echo $this->Form->create(array('action' => 'view'));?>
                 
                 <input type='checkbox' id='FbyLocation'> POR UBICACI&Oacute;N:
@@ -29,7 +29,7 @@
             $(document).ready(function(){                
                 $('#dateContainer').hide();                
                 $( "input.datepicker" ).datepicker({
-                    dateFormat: 'dd-mm-yy',
+                    dateFormat: 'yy-mm-dd',
                     yearRange: "-100:+50",
                     changeMonth: true,
                     changeYear: true,
@@ -86,8 +86,7 @@
                             $.each(data,function(i,apartment){
                                 $('#ExpenseApartmentId').append("<option value='" + apartment['Apartment']['id'] + 
                                         "'>" + apartment['Apartment']['name'] + "</option>")});                               
-                                        
-                                                     
+                                                   
                         },
                         error: function(e){                            
                             console.log(e);
@@ -103,13 +102,17 @@
                             alert('Debe seleccionar una ubicacion');
                             return false;
                         }
-                    }
+                    }else{$('#ExpenseLocationId').val('-1');}
 
                     if ($('#FbyApartment').prop('checked')){     //valida que se ingresó un proveedor
                         if ( $('#ExpenseApartmentId').val()=== '-1'){
                             alert('Debe seleccionar un apartament');
                             return false;
                         }
+                    }else{
+                    	$('#ExpenseApartmentId').empty();  //machete para 
+                    	$('#ExpenseApartmentId').append("<option value='-1'>-1</option>");
+                		$('#ExpenseApartmentId').val('-1');
                     }
                     
                     if ($('#FbyDate').prop('checked')){
@@ -118,6 +121,7 @@
                             alert('Debe ingresar fechas correctas');
                             return false;
                         }
+                        
                         if ($('#ExpenseToDate').val()<$('#ExpenseFromDate').val()){
                             alert('La fecha final debe ser mayor que la fecha incial');
                             return false;

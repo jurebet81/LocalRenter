@@ -2,7 +2,7 @@
 <html lang='es'>
 <head>
 	<?php echo $this->Html->charset(); ?>
-	<title>	Inventario <?php //echo $title_for_layout; ?></title>
+	<title>AppLocalRenter <?php //echo $title_for_layout; ?></title>
 	<?php
 		echo $this->Html->meta('icon', 'img/main-icon.png', array('type' => 'icon'));
 		echo $this->Html->css(array(
@@ -61,10 +61,7 @@
                 <li><?php echo $this->Html->link('Arrendatario', 
                          array('controller' =>'renters', 'action' => 'add'));?>
 		</li>
-                <li><?php echo $this->Html->link('Proveedores', 
-                         array('controller' =>'providers', 'action' => 'add'));?>
-		</li>                
-               
+                
                 <li><?php 
                 echo $this->Html->link('Reportes', array('controller' =>'#'));
                     // echo $this->Html->link('Reportes', array('controller' => $this->params['controller']));
@@ -81,12 +78,7 @@
                         </li>
                         <li><?php echo $this->Html->link('Clientes', 
                             array('controller' =>'clients', 'action' => 'view'));?>
-                        </li> 
-                        <li><?php echo $this->Html->link('Proveedores', 
-                            array('controller' =>'providers', 'action' => 'view'));?>
-                        </li> 
-                        
-                        
+                        </li>                         
                     </ul> 
                 </li> 
                  <li><?php echo $this->Html->link('Salir', 
