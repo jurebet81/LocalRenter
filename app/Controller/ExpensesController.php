@@ -6,7 +6,7 @@ class ExpensesController extends AppController {
         public $components = array('Session','RequestHandler');
         public $cond = array();
                 
-        public $paginate = array(  //join for retrieve purchase details and prices...
+        public $paginate = array(  
             'fields' => array(
                 'Expense.id', 
                 'Apto.name',
@@ -26,26 +26,26 @@ class ExpensesController extends AppController {
             'order' => array('Expense.date' => 'DESC'),             
         );
         
-	public function index(){	
-             
-            if ($this->request->is('post')){                 
-                $this->redirect(array('controller' => 'expenses', 'action' => 'view'));                
-                
-            }else{                
-                              	
-                $locations = array('-1' => '');
-            	$paramsLoc = array(
-            			'order' => array( //contidion is defined to find apartamens in ascencdent order
-            					'Location.name' => 'ASC'));
-            	
-            	$this->loadModel('Location');
-            	array_push($locations, $this->Location->find('list',$paramsLoc));
-            	$this->set('locations',$locations);
-            	 
-            }                       
-           
-            $this->layout = 'home';
-	}
+		public function index(){	
+	             
+	            if ($this->request->is('post')){                 
+	                $this->redirect(array('controller' => 'expenses', 'action' => 'view'));                
+	                
+	            }else{                
+	                              	
+	                $locations = array('-1' => '');
+	            	$paramsLoc = array(
+	            			'order' => array( //contidion is defined to find apartamens in ascencdent order
+	            					'Location.name' => 'ASC'));
+	            	
+	            	$this->loadModel('Location');
+	            	array_push($locations, $this->Location->find('list',$paramsLoc));
+	            	$this->set('locations',$locations);
+	            	 
+	            }                       
+	           
+	            $this->layout = 'home';
+		}
         
         public function add(){      
             
@@ -128,17 +128,36 @@ class ExpensesController extends AppController {
             }
             $this->layout = 'home';           
         }
+                
+        public function edit($id){
         
-        public function fetchApartments($id = null){
+        	$this->Expense->id = $id;
+        	if ($this->request->is('get')){
+        		$this->request->data = $this->Expense->read();
+        		
+        		$this->log($this->request->data);
         
-        	$paramsApar = array(
-        			'conditions' => array(        					
-        					'Apartment.location_id' => $id),
-        			'order' => array( 
-        					'Apartment.name' => 'DESC'));
-        	
-        	$this->set('apartments', $this->Expense->Apartment->find('all',$paramsApar));
+        		$this->loadModel('Location');
+        		$location = $this->Location->findById($this->request->data['Apartment']['location_id']);
         
+        		$this->request->data['Location'] = $location['Location'];
+        		 
+        	}else{
+        		//$message = $this->custoValidation($this->request->data);
+        		$message = null;
+        		if ($message!=null){
+        			$this->Session->setFlash("<div class = 'err'>" . $message . "</div>");
+        			$this->redirect(array('action' => 'edit', $this->Provider->id));
+        		}
+        
+        		$this->request->data['Expense']['date'] = date('Y-m-d',strtotime($this->request->data['Expense']['date']));
+        
+        		if($this->Expense->save($this->request->data)){
+        			$this->Session->setFlash("<div class = 'info'>Gasto modificado con éxito.</div>");
+        			$this->redirect(array('action' => 'view'));
+        		}
+        	}
+        	$this->layout = 'home';
         }
         
         private function custoValidation($newPurchase){
@@ -156,8 +175,7 @@ class ExpensesController extends AppController {
             }  
             return $message;            
         }
-             
-        
+                    
         private function findConditions($fromDate,$toDate,$location_id,$apartment_id){
             $conditions = '';
             
@@ -207,6 +225,17 @@ class ExpensesController extends AppController {
             
             return $conditions;                
                 
+        }
+        
+        public function remove ($id){
+        	 
+        	$this->Expense->id = $id;
+        	        	      	 
+        	if($this->Expense->delete()){
+        		$this->Session->setFlash("<div class = 'info'>Gasto se ha eliminado con éxito.</div>");
+        		$this->redirect(array('action' => 'view'));
+        	}
+        	 
         }
         
         public function error(){

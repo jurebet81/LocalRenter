@@ -113,12 +113,35 @@ class ApartmentsController extends AppController {
     	}       
         return $message;            
     }
-        
-         public function error(){
+
+    public function fetchAvailableApartments($id = null){    
+    	
+    	$paramsApar = array(
+    			'conditions' => array(
+    					'Apartment.available' => 'si',
+    					'Apartment.location_id' => $id),
+    			'order' => array( //contidion is defined to find apartamens in ascencdent order
+    					'Apartment.name' => 'DESC'));
+    	$this->set('apartments', $this->Apartment->find('all',$paramsApar));    	
+    
+    }
+    
+    public function fetchAllApartments($id = null){
+    	 
+    	$paramsApar = array(
+    			'conditions' => array(
+    					'Apartment.location_id' => $id),
+    			'order' => array( //contidion is defined to find apartamens in ascencdent order
+    					'Apartment.name' => 'DESC'));
+    	$this->set('apartments', $this->Apartment->find('all',$paramsApar));
+    
+    }
+    
+    public function error(){
             $this->Session->setFlash("<div class = 'err'>Ocurrió un error durante la acción solicitada,
                 vuelva a intetarlo, si el error persiste por favor contacte al administrador,
                 pedimos dusculpas por las molestias ocasionadas.</div>");
             $this->layout = 'home';
-        }
+    }
 }
 ?>

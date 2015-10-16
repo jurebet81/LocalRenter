@@ -8,6 +8,9 @@ class LeasesController extends AppController {
         public $helpers = array('Html','Form');
         public $components = array('Session','RequestHandler');
         public $cond = array();             
+        
+        public $months = array('-1' => '', '1' => 'Enero','2' => 'Febrero','3' => 'Marzo','4' => 'Abril','5' => 'Mayo','6' => 'Junio',
+        		'7' => 'Julio', '8' => 'Agosto','9' => 'Septiembre','10' => 'Octubre','11' => 'Noviembre','12' => 'Diciembre');
 
         public $paginate = array(  //join for retrieve sales details and prices together...
         		'fields' => array(
@@ -29,29 +32,28 @@ class LeasesController extends AppController {
         		),
         		'order' => array('Lease.last_payment_date' => 'ASC'),
         );
-        
-            
-	public function index(){	
-            
-            if ($this->request->is('post')){                 
-                $this->redirect(array('controller' => 'sales', 'action' => 'view'));                 
-                
-            }else{
-                
-                $params = array('order' => array( //contidion is defined to find clients in ascencdent order
-                'Client.name' => 'ASC'),
-                );
-                $clients = array('-1' => '');
-                array_push($clients, $this->Sale->Client->find('list',$params));             
-                $this->set('clients', $clients);                
-                
-                $sales = $this->paginate(array ('conditions'=>$this->cond));
-                $this->set('sales',$sales);  
-            }                       
-           
-            $this->layout = 'home';	
-	}
-        
+                  
+		public function index(){	
+	            
+	            if ($this->request->is('post')){                 
+	                $this->redirect(array('controller' => 'sales', 'action' => 'view'));                 
+	                
+	            }else{
+	                
+	                $params = array('order' => array( //contidion is defined to find clients in ascencdent order
+	                'Client.name' => 'ASC'),
+	                );
+	                $clients = array('-1' => '');
+	                array_push($clients, $this->Sale->Client->find('list',$params));             
+	                $this->set('clients', $clients);                
+	                
+	                $sales = $this->paginate(array ('conditions'=>$this->cond));
+	                $this->set('sales',$sales);  
+	            }                       
+	           
+	            $this->layout = 'home';	
+		}
+	        
         public function add(){            
             
              if ($this->request->is('post')){                         
@@ -94,8 +96,7 @@ class LeasesController extends AppController {
             }
             $this->layout = 'home';
         }
-        
-        
+              
         public function download($id = null){
         	
             $pathFile = WWW_ROOT . DS . 'files' . DS . 'Contract_template.txt';
@@ -127,18 +128,7 @@ class LeasesController extends AppController {
                 
             $this->layout = 'home';
         }
-        
-        public function fetchApartments($id = null){             
-            
-            $paramsApar = array(
-                    'conditions' => array(
-                        'Apartment.available' => 'si',
-                        'Apartment.location_id' => $id),
-                    'order' => array( //contidion is defined to find apartamens in ascencdent order
-                        'Apartment.name' => 'DESC'));   
-                $this->set('apartments', $this->Lease->Apartment->find('all',$paramsApar));
-                
-        }
+         
         
         public function view(){           
             
@@ -181,8 +171,69 @@ class LeasesController extends AppController {
             }
             $this->layout = 'home';             
         }
-	        
-        public function custoValidation($newSale){
+
+        public function edit($id){
+        
+        	$this->Lease->id = $id;
+        	if ($this->request->is('get')){
+        		$this->request->data = $this->Lease->read();
+        
+        		$this->loadModel('Location');
+        		$location = $this->Location->findById($this->request->data['Apartment']['location_id']);
+        
+        		$this->request->data['Location'] = $location['Location'];
+        		 
+        	}else{
+        		//$message = $this->custoValidation($this->request->data);
+        		$message = null;
+        		if ($message!=null){
+        			$this->Session->setFlash("<div class = 'err'>" . $message . "</div>");
+        			$this->redirect(array('action' => 'edit', $this->Provider->id));
+        		}
+        
+        		$this->request->data['Lease']['end_date'] = date('Y-m-d',strtotime($this->request->data['Lease']['end_date']));
+        
+        		if($this->Lease->save($this->request->data)){
+        			$this->Session->setFlash("<div class = 'info'>Contrato actualizado con Èxito.</div>");
+        			$this->redirect(array('action' => 'view'));
+        		}
+        	}
+        	$this->layout = 'home';
+        }
+        
+        public function profits(){
+        
+        	if ($this->request->is('post')){
+        		$this->Session->write('ProfitFilters', $this->request->data);
+        		$this->redirect(array('controller' => 'sales', 'action' => 'profitdetails'));
+        
+        	}else{
+        		$year = 2015;
+        		$years = array('-1' => '');
+        		$counter = 0;
+        
+        		while ($year<=date("Y") && $counter++ <= 5){
+        			$years[$year] = $year;
+        			$year++;
+        			$counter++;
+        		}
+        		
+        		$locations = array('-1' => '');
+        		$paramsLoc = array('order' => array( //contidion is defined to find prducts in ascencdent order
+        				'Location.name' => 'ASC'),
+        		);
+        		$this->loadModel('Location');
+        		array_push($locations,$this->Location->find('list',$paramsLoc));
+        		
+        		$this->set('locations', $locations);
+        		$this->set('years',$years);
+        		$this->set('months',$this->months);
+        	}
+        
+        	$this->layout = 'home';
+        }
+        
+        private function custoValidation($newSale){
            
            $message=null;
            
@@ -194,36 +245,7 @@ class LeasesController extends AppController {
            return $message;            
         }
         
-        public function edit($id){
-        	 
-        	$this->Lease->id = $id;
-        	if ($this->request->is('get')){
-        		$this->request->data = $this->Lease->read();   
-        		
-        		$this->loadModel('Location');
-        		$location = $this->Location->findById($this->request->data['Apartment']['location_id']);
-        		
-        		$this->request->data['Location'] = $location['Location'];
-        			 		 
-        	}else{
-        		//$message = $this->custoValidation($this->request->data);
-        		$message = null;
-        		if ($message!=null){
-        			$this->Session->setFlash("<div class = 'err'>" . $message . "</div>");
-        			$this->redirect(array('action' => 'edit', $this->Provider->id));
-        		}
-        		
-        		$this->request->data['Lease']['end_date'] = date('Y-m-d',strtotime($this->request->data['Lease']['end_date']));
-        		
-        		if($this->Lease->save($this->request->data)){
-        			$this->Session->setFlash("<div class = 'info'>Contrato actualizado con Èxito.</div>");
-        			$this->redirect(array('action' => 'view'));
-        		}
-        	}
-        	$this->layout = 'home';
-        }
-        
-        public function findConditions($fromDate,$toDate,$client_id){
+        private function findConditions($fromDate,$toDate,$client_id){
             $conditions = '';
             if ($fromDate!='' && $toDate != ''){
                     $fromDate = date('Y-m-d',strtotime($fromDate));
@@ -263,6 +285,7 @@ class LeasesController extends AppController {
         	}        	
         	
         }        
+        
         public function error(){
             $this->Session->setFlash("<div class = 'err'>Ocurri√≥ un error durante la acci√≥n solicitada,
                 vuelva a intetarlo, si el error persiste por favor contacte al administrador,

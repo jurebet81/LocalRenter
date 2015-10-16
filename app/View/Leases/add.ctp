@@ -68,7 +68,7 @@
                         type: 'POST',  
                         dataType: 'json',
                         contentType : 'application/json; charset=utf-8',                      
-                        url: '/LocalRenter/Leases/fetchApartments/' + selectedLoc,   
+                        url: '/LocalRenter/Apartments/fetchAvailableApartments/' + selectedLoc,   
                         success: function (data){
                         	apartments = data;
                             $('#LeaseApartmentId').empty();   

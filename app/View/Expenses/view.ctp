@@ -23,12 +23,12 @@
             	<?php echo $this->Html->image('edit-icon.png', array ('alt' =>'CakePHP', 'url' =>
                     array ('controller' => 'Expenses', 'action' => 'edit', $expense['Expense']['id'])
                          ));
-                 ?>                 
+                 ?> <span class="CloseExpenseImg">                 
             	<?php echo $this->Html->image('delete-icon.png', array ('alt' =>'CakePHP', 'url' =>
                     array ('controller' => 'Expenses', 'action' => 'remove', $expense['Expense']['id'])
                     
                          ));
-                ?>       
+                ?>       </span>
             </td>
         </tr>
         <?php 
@@ -52,7 +52,7 @@
         ?>
     </p>    
     
-    <?php echo $this->element('sql_dump');?>
+    <?php //echo $this->element('sql_dump');?>
     <div class='pagination'>
         
         <?php echo $this->Paginator->prev('Anterior', array(), null, array('class' => 'disabled'));?>
@@ -61,5 +61,18 @@
     </div>    
     
 </div>
+
+<script language="javascript" type="text/javascript">		
+             $(document).ready(function() {             	
+                $('.CloseExpenseImg').click(function(){                                        
+                	var answer = confirm("¿Esta Seguro que desea eliminar el gasto?"); 
+                	if (answer==false){
+                	    return false;
+                	}                	                
+            	});  
+                   
+            });
+           
+</script>
 
  

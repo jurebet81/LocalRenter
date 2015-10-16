@@ -69,8 +69,7 @@
                 	if (answer==false){
                 	    return false;
                 	}                	                
-            });   
-            
+            	});  
                    
             });
            

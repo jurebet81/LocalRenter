@@ -73,6 +73,9 @@
                         <li><?php echo $this->Html->link('Gastos', 
                             array('controller' =>'expenses', 'action' => 'index'));?>
                         </li> 
+                        <li><?php echo $this->Html->link('Utilidades', 
+                            array('controller' =>'leases', 'action' => 'profits'));?>
+                        </li>
                         <li><?php echo $this->Html->link('Apartamentos', 
                             array('controller' =>'apartments', 'action' => 'view'));?>
                         </li>

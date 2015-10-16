@@ -32,7 +32,7 @@
                     changeYear: true,
                     constrainInput: false,
                     showOn: 'both',
-                    buttonImage: "/StockApp/img/calendar.png",
+                    buttonImage: "/LocalRenter/img/calendar.png",
                     buttonImageOnly: true                    
                 });
                             
