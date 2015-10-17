@@ -65,7 +65,7 @@
 <script language="javascript" type="text/javascript">		
              $(document).ready(function() {             	
                 $('.CloseExpenseImg').click(function(){                                        
-                	var answer = confirm("¿Esta Seguro que desea eliminar el gasto?"); 
+                	var answer = confirm("ï¿½Esta Seguro que desea eliminar el gasto?"); 
                 	if (answer==false){
                 	    return false;
                 	}                	                
@@ -74,5 +74,3 @@
             });
            
 </script>
-
- 

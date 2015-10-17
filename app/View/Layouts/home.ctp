@@ -31,13 +31,13 @@
             <div id="templatemo_header">				
 					<table>
 						<tr>
-							<th>Tienda los primos</th>
+							<th>LOCAL RENTER</th>
 						</tr>
 						<tr>
-							<th>NIT : 982389238923</th>
+							<th>Aplicaci&oacute;n de Arrendamientos</th>
 						</tr>
 						<tr>
-							<th>Tel&eacute;fono : 8415942</th>							
+							<th>----------------</th>							
 						</tr>						
 					</table>				
                 <div class="uName" ><?php echo AuthComponent::user('username') . ' ' .
@@ -70,18 +70,18 @@
                         <li><?php echo $this->Html->link('Arrendos', 
                             array('controller' =>'leases', 'action' => 'view'));?>
                         </li> 
+                        <li><?php echo $this->Html->link('Pagos', 
+                            array('controller' =>'payments', 'action' => 'index'));?>
+                        </li>
                         <li><?php echo $this->Html->link('Gastos', 
                             array('controller' =>'expenses', 'action' => 'index'));?>
-                        </li> 
+                        </li>                         
                         <li><?php echo $this->Html->link('Utilidades', 
                             array('controller' =>'leases', 'action' => 'profits'));?>
                         </li>
                         <li><?php echo $this->Html->link('Apartamentos', 
                             array('controller' =>'apartments', 'action' => 'view'));?>
-                        </li>
-                        <li><?php echo $this->Html->link('Clientes', 
-                            array('controller' =>'clients', 'action' => 'view'));?>
-                        </li>                         
+                        </li>                                                 
                     </ul> 
                 </li> 
                  <li><?php echo $this->Html->link('Salir', 

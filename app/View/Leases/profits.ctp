@@ -19,13 +19,19 @@
 <script language="javascript" type="text/javascript">	
             
             $(document).ready(function(){
-                
+                $('#LeaseApartmentId').empty(); 
                 $('.submit').click(function(){                    
                     if ( $('#SaleYear').val()=== '-1'){
                         alert('Debe seleccionar el año para la consulta');
                         return false;
                     }
-                              
+                    
+                    if ( $('#LeaseApartmentId').val()=== null){                            
+                            $('#LeaseApartmentId').empty();  //machete para 
+                            $('#LeaseApartmentId').append("<option value='-1'></option>");
+                            $('#LeaseApartmentId').val('-1');
+                    }                    
+                                                  
                 }); 
 
                 $('#LeaseLocationId').change(function(){                    
@@ -38,7 +44,8 @@
                            
                         success: function (data){   
                             
-                            $('#LeaseApartmentId').empty();                                                                             
+                            $('#LeaseApartmentId').empty(); 
+                            $('#LeaseApartmentId').append("<option value='-1'></option>")
                             $.each(data,function(i,apartment){
                                 $('#LeaseApartmentId').append("<option value='" + apartment['Apartment']['id'] + 
                                         "'>" + apartment['Apartment']['name'] + "</option>");});                               

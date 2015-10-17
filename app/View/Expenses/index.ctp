@@ -44,8 +44,8 @@
                         $('#dateContainer').show();
                     }else{
                        $('#dateContainer').hide();
-                       $('#PurchaseToDate').val('');
-                       $('#PurchaseFromDate').val('');                      
+                       $('#ExpenseToDate').val('');
+                       $('#ExpenseFromDate').val('');                      
                     }
                 });
                 
@@ -73,7 +73,7 @@
                     }
                 });
 
-				$('#ExpenseLocationId').change(function(){                    
+                $('#ExpenseLocationId').change(function(){                    
                     var selectedLoc = $(this).val();   
                     $.ajax({ 
                         type: 'POST',  
@@ -112,7 +112,7 @@
                     }else{
                     	$('#ExpenseApartmentId').empty();  //machete para 
                     	$('#ExpenseApartmentId').append("<option value='-1'>-1</option>");
-                		$('#ExpenseApartmentId').val('-1');
+                	$('#ExpenseApartmentId').val('-1');
                     }
                     
                     if ($('#FbyDate').prop('checked')){

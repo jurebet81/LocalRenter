@@ -88,11 +88,10 @@ class ExpensesController extends AppController {
             	
                 $data = $this->request->data;                  
                            
-	            $fromDate = $data['Expense']['FromDate'];
-	            $toDate = $data['Expense']['ToDate'];
-	            $location_id = $data['Expense']['location_id'];  
-	            $apartment_id = $data['Expense']['apartment_id'];
-                
+                $fromDate = $data['Expense']['FromDate'];
+                $toDate = $data['Expense']['ToDate'];
+                $location_id = $data['Expense']['location_id'];  
+                $apartment_id = $data['Expense']['apartment_id'];                
                 
                 $conditions = $this->findConditions($fromDate,$toDate,$location_id,$apartment_id);  
                                 
@@ -106,8 +105,7 @@ class ExpensesController extends AppController {
                     return $expenses;
                 }else{
                     $this->set('expenses',$expenses);         
-                }
-                               
+                }                               
                 
             }else{
             	
@@ -153,7 +151,7 @@ class ExpensesController extends AppController {
         		$this->request->data['Expense']['date'] = date('Y-m-d',strtotime($this->request->data['Expense']['date']));
         
         		if($this->Expense->save($this->request->data)){
-        			$this->Session->setFlash("<div class = 'info'>Gasto modificado con éxito.</div>");
+        			$this->Session->setFlash("<div class = 'info'>Gasto modificado con ï¿½xito.</div>");
         			$this->redirect(array('action' => 'view'));
         		}
         	}
@@ -181,7 +179,7 @@ class ExpensesController extends AppController {
             
             if ($location_id > 0 && $apartment_id < 1){
             	
-            	$this->loadModel('Apartment');  //Busca los Ids de la ubicacón seleccionada
+            	$this->loadModel('Apartment');  //Busca los Ids de la ubicacï¿½n seleccionada
             	$apartmentIds = $this->Apartment->find('list', array(
         			'fields' => array('Apartment.id'),
         			'conditions' => array('Apartment.location_id' => $location_id),
@@ -232,7 +230,7 @@ class ExpensesController extends AppController {
         	$this->Expense->id = $id;
         	        	      	 
         	if($this->Expense->delete()){
-        		$this->Session->setFlash("<div class = 'info'>Gasto se ha eliminado con éxito.</div>");
+        		$this->Session->setFlash("<div class = 'info'>Gasto se ha eliminado con ï¿½xito.</div>");
         		$this->redirect(array('action' => 'view'));
         	}
         	 

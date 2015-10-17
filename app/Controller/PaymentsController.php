@@ -5,13 +5,52 @@ class PaymentsController extends AppController{
     public $helpers = array('Html','Form');    
     public $components = array('Session');
     
-    public $paginate = array(
+    public $paginate = array(  
+            'fields' => array(
+                'Payment.id', 
+                'Apto.name',
+            	'L.holder_name',
+                'Payment.amount',
+                'Payment.date',
+                'Payment.from_date',
+                'Payment.to_date',
+            ),            
+            'recursive' => 0,
             'limit' => 15,
-            'order' => array('Payment.date' => 'asc'),
+            'joins' => array(
+                    array (
+                        'table' => 'leases',
+                        'alias' => 'L',
+                        'conditions' => array('L.id = Payment.lease_id'                            
+                            )
+                    ),
+                    array (
+                        'table' => 'apartments',
+                        'alias' => 'Apto',
+                        'conditions' => array('Apto.id = L.apartment_id')
+                    ),
+                
+                                        
+            ),            
+            'order' => array('Payment.date' => 'DESC'),             
         );
     
-    public function index(){
-        $this->layout = 'home';	
+    public function index(){	
+	             
+	if ($this->request->is('post')){                 
+	    $this->redirect(array('controller' => 'payments', 'action' => 'view'));                
+	             
+	}else{               
+	                              	
+            $locations = array('-1' => '');
+	    $paramsLoc = array(
+	            'order' => array('Location.name' => 'ASC'));
+	            	
+	    $this->loadModel('Location');
+	    array_push($locations, $this->Location->find('list',$paramsLoc));
+	    $this->set('locations',$locations);	            	 
+	}         
+	$this->layout = 'home';
     }
     
     public function add($leaseId = null){
@@ -47,38 +86,110 @@ class PaymentsController extends AppController{
         $this->layout = 'home';	
     }
         
-    public function view(){
-    	
-        $this->Provider->recursive = 0; 
-        $providers = $this->paginate();
-        if ($this->request->is('requested')){ //pregunta de eleeento
-            return $providers;
+    public function view(){ 
+        
+        $fromDate = '';
+        $toDate = '';
+        $location_id = -1;   
+        $apartment_id = -1;
+
+        if ($this->request->is('post')){ 
+
+            $data = $this->request->data;                  
+
+            $fromDate = $data['Payment']['FromDate'];
+            $toDate = $data['Payment']['ToDate'];
+            $location_id = $data['Payment']['location_id'];  
+            $apartment_id = $data['Payment']['apartment_id'];                
+
+            $conditions = $this->findConditions($fromDate,$toDate,$location_id,$apartment_id);  
+
+            $this->Session->write('conditionsExp', $conditions);
+
+            $this->cond = array ($conditions);
+            $this->paginate['conditions'] = $this->cond;  
+            $payments = $this->paginate();  
+            
+            if ($this->request->is('requested')){   //pregunta de eleeento
+                return $payments;
+            }else{
+                $this->set('payments',$payments);         
+            }                               
+
         }else{
-            $this->set('providers',$providers);                
-        } 
-        $this->layout = 'home';
-   }
-       
-   public function edit($id){            
-        $this->Provider->id = $id;
-        if ($this->request->is('get')){
-            $this->request->data = $this->Provider->read();
-             
-        }else{
-             $message = $this->custoValidation($this->request->data);
-             if ($message!=null){                  
-                  $this->Session->setFlash("<div class = 'err'>" . $message . "</div>");
-                  $this->redirect(array('action' => 'edit', $this->Provider->id));                    
-             }  
-               
-             if($this->Provider->save($this->request->data)){
-                $this->Session->setFlash("<div class = 'info'>Proveedor actualizado con éxito.</div>");
-                $this->redirect(array('action' => 'view'));
+
+            if ($this->Session->check('conditions')){                    
+                $conditions = $this->Session->read('conditionsExp');                   
             }
+
+            $this->cond = array ($conditions);                
+            $this->Payment->recursive = 0; 
+            $this->paginate['conditions'] = $this->cond;
+            $payments = $this->paginate();
+
+            if ($this->request->is('requested')){ //pregunta de eleeento
+                return $payments;
+            }else{
+                $this->set('payments',$payments);                
+            }                 
         }
-            $this->layout = 'home';
+        $this->layout = 'home';           
+    }
+       
+    public function edit($id){            
+        $this->layout = 'home';
     }
     
+    private function findConditions($fromDate,$toDate,$location_id,$apartment_id){
+        $conditions = '';
+        if ($location_id > 0 && $apartment_id < 1){
+
+            $this->loadModel('Apartment');  //Busca los Ids de la ubicac�n seleccionada
+            $apartmentIds = $this->Apartment->find('list', array(
+                            'fields' => array('Apartment.id'),
+                            'conditions' => array('Apartment.location_id' => $location_id),
+                            'recursive' => 0
+                    ));            	
+        }
+
+        if ($fromDate!='' && $toDate != ''){
+
+            $fromDate = date('Y-m-d',strtotime($fromDate));
+            $toDate = date('Y-m-d',strtotime($toDate)); 
+            $conditions = "Payment.date >= " . "'" . $fromDate . "'" . 
+                    " AND Payment.date <= " . "'" . $toDate . "'";
+
+            if ($location_id >0 && $apartment_id > 0){ //by Date, apartment
+                    $conditions .= " AND Lease.apartment_id='" . $apartment_id . "'" ;
+                            //" AND Payment.lease_id = Lease.id" ;
+
+            }else if($location_id >0 && $apartment_id < 1){ //by Location
+
+                    $conditions .= " AND Lease.apartment_id IN ('" . array_shift($apartmentIds) . "'"; //toma el primer elmento de los array
+                    foreach($apartmentIds as $idApto){
+                            $conditions .= ",'" . $idApto . "'";
+                    }
+                    $conditions .= ")";                	
+            }
+        } 
+        if ($fromDate == '' && $toDate == ''){ //Without dates            
+            if ($location_id >0 && $apartment_id > 0){ //by apartment
+                    $conditions .= "Lease.apartment_id = '" . $apartment_id . "'";
+
+            }else if($location_id >0 && $apartment_id < 1){ //by Location
+
+                    $conditions .= "Lease.apartment_id IN ('" . array_shift($apartmentIds) . "'"; //toma el primer elmento de los array
+                    foreach($apartmentIds as $idApto){
+                            $conditions .= ",'" . $idApto . "'";
+                    }
+                    $conditions .= ")";
+            }
+        }
+
+        return $conditions;                
+
+    }
+        
      public function custoValidation($provider){
            
            $message=null;

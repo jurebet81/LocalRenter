@@ -194,7 +194,7 @@ class LeasesController extends AppController {
         		$this->request->data['Lease']['end_date'] = date('Y-m-d',strtotime($this->request->data['Lease']['end_date']));
         
         		if($this->Lease->save($this->request->data)){
-        			$this->Session->setFlash("<div class = 'info'>Contrato actualizado con éxito.</div>");
+        			$this->Session->setFlash("<div class = 'info'>Contrato actualizado con ï¿½xito.</div>");
         			$this->redirect(array('action' => 'view'));
         		}
         	}
@@ -242,20 +242,16 @@ class LeasesController extends AppController {
         	}else{
         		$this->redirect(array('action' => 'profits'));
         	}
-        	
-        	$this->log($filters);
-        	
+        	        	        	
         	$year = $filters['Lease']['year'];
         	$month = $filters['Lease']['month'];
         	$location_id = $filters['Lease']['location_id'];
         	$apartment_id = $filters['Lease']['apartment_id'];
         
         	
-        	if ($year > 2014 && $month > 0)  {
-        
+        	if ($year > 2014 && $month > 0)  {        
         		$profitdetail = $this->getProfitByMonth($year,$month,$location_id,$apartment_id);
-        		array_push($profitdetails, $profitdetail);
-        
+        		array_push($profitdetails, $profitdetail);        
         	}else if ($year > 2014 && $month < 1) {
         		for ($imonth=1;$imonth<13;$imonth++){
         			$profitdetail = $this->getProfitByMonth($year,$imonth,$location_id,$apartment_id);
@@ -276,33 +272,51 @@ class LeasesController extends AppController {
         	$last_date = date('Y-m-d',strtotime("-1 day",$l_date));
         	$init_date = date('Y-m-d',$i_date);
         
-        	$querySale = "SELECT SUM(d.total_price) as Total FROM sales s, saledetails d "
-        			. "WHERE s.id = d.sale_id and s.date between "
+        	$queryPayment = "SELECT SUM(p.amount) as Total FROM payments p, leases l "
+        			. "WHERE p.lease_id = l.id AND "
+                         . "p.date between " . "'" . $init_date . "' and '" . $last_date . "'";
+        
+        	$queryExpense = "SELECT SUM(e.amount) as Total FROM expenses e "
+        			. "WHERE e.date between "
         					. "'" . $init_date . "' and '" . $last_date . "'";
         
-        	$queryPurchase = "SELECT SUM(d.total_price) as Total FROM purchases p, purchasedetails d "
-        			. "WHERE p.id = d.purchase_id and p.date_delivered between "
-        					. "'" . $init_date . "' and '" . $last_date . "'";
+        	if ($location_id>0 && $apartment_id>0){
+        		$queryPayment .= " AND l.apartment_id = " . $apartment_id;
+        		$queryExpense .= " AND e.apartment_id = " . $apartment_id;
+                }else if($location_id>0 && $apartment_id<1){
+                    $this->loadModel('Apartment');  //Busca los Ids de la ubicacï¿½n seleccionada
+                    $apartmentIds = $this->Apartment->find('list', array(
+        			'fields' => array('Apartment.id'),
+        			'conditions' => array('Apartment.location_id' => $location_id),
+        			'recursive' => 0
+                    )); 
+                    
+                    $firstid = array_shift($apartmentIds);//toma el primer elmento de los array
+                    $queryPayment .= " AND l.apartment_id IN ('" . $firstid . "'"; 
+                    $queryExpense .= " AND e.apartment_id IN ('" . $firstid . "'"; 
+                    
+                    foreach($apartmentIds as $idApto){
+                	$queryPayment .= ",'" . $idApto . "'";
+                        $queryExpense .= ",'" . $idApto . "'";
+                    }
+                    $queryPayment .= ")";  
+                    $queryExpense .= ")";
+                }
         
-        	if ($product>0){
-        		$querySale .= " AND d.product_id = " . $product;
-        		$queryPurchase .= " AND d.product_id = " . $product;
+        	$paymentArray = $this->Lease->query($queryPayment);
+        	$payment = $paymentArray[0][0]['Total'];
+        	$expenseArray =  $this->Lease->query($queryExpense);
+        	$expense = $expenseArray[0][0]['Total'];
+        
+        	if ($payment==''){
+        		$payment = 0;
         	}
-        
-        	$saleArray = $this->Sale->query($querySale);
-        	$sale = $saleArray[0][0]['Total'];
-        	$purchaseArray =  $this->Sale->query($queryPurchase);
-        	$purchase = $purchaseArray[0][0]['Total'];
-        
-        	if ($sale==''){
-        		$sale = 0;
-        	}
-        	if ($purchase==''){
-        		$purchase = 0;
+        	if ($expense==''){
+        		$expense = 0;
         	}
         
         	$profitdetail = array($this->months[$month] . "/" . $year =>
-        			array('Sales' => $sale, 'Purchases' => $purchase, 'Profits' => $sale - $purchase));
+        			array('Payments' => $payment, 'Expenses' => $expense, 'Profits' => $payment - $expense));
         
         	return $profitdetail;
         }
@@ -355,7 +369,7 @@ class LeasesController extends AppController {
         	));
         	
         	if($this->Lease->save()){
-        		$this->Session->setFlash("<div class = 'info'>Contrato cerrado con éxito.</div>");
+        		$this->Session->setFlash("<div class = 'info'>Contrato cerrado con ï¿½xito.</div>");
         		$this->redirect(array('action' => 'view'));
         	}        	
         	
