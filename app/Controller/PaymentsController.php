@@ -118,7 +118,7 @@ class PaymentsController extends AppController{
 
         }else{
 
-            if ($this->Session->check('conditions')){                    
+            if ($this->Session->check('conditionsExp')){                    
                 $conditions = $this->Session->read('conditionsExp');                   
             }
 
@@ -188,6 +188,16 @@ class PaymentsController extends AppController{
 
         return $conditions;                
 
+    }
+    
+    public function remove($id){
+    	$this->Payment->id = $id;
+    	
+    	if ($this->Payment->delete()){    		
+    		$this->Session->setFlash("<div class = 'info'>Pago eliminado con �xito.</div>");
+    		$this->redirect(array('action' => 'view'));
+    	}
+    	$this->layout = 'home';    	
     }
         
      public function custoValidation($provider){

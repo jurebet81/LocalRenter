@@ -62,19 +62,11 @@ class LeasesController extends AppController {
                 
                 if ($this->request->data['Lease']['end_date']!= null){
                 	$this->request->data['Lease']['end_date'] = date('Y-m-d',strtotime($this->request->data['Lease']['end_date']));
-                }
-                
-                //$message = $this->custoValidation($this->request->data);
-                $message = null;
-                if ($message!=null){                  
-                    $this->Session->setFlash("<div class = 'err' >" . $message . "</div>");
-                    $this->redirect(array('action' => 'add'));
-                    return;
-                } 
-                               
+                }                
+                       
                 if ($this->Lease->save($this->request->data)){
-                    $this->Session->setFlash("<div class = 'info'>Contrato ingresado correctamente, Resumen del contrato</div>");
-                    $this->redirect(array('controller' => 'Leases', 'action' => 'download', $this->lease->id));
+                    //$this->Session->setFlash("<div class = 'info'>Contrato ingresado correctamente, Resumen del contrato</div>");
+                    $this->redirect(array('controller' => 'Leases', 'action' => 'printContract', $this->lease->id));
                 }  
             }else {
                 
@@ -91,15 +83,29 @@ class LeasesController extends AppController {
                 		'Renter.name' => 'ASC'),
                 );
                 $this->set('renters', $this->Lease->Renter->find('list',$paramsRen));
-                
-                
+                               
             }
             $this->layout = 'home';
         }
               
-        public function download($id = null){
+        public function printContract($id = null){
         	
-            $pathFile = WWW_ROOT . DS . 'files' . DS . 'Contract_template.txt';
+        	//$contract = array("contrato" => "todo el texto que implica el contrato");
+        	
+        	$pathFile = WWW_ROOT . DS . 'files' . DS . 'Contract_template_2.txt';
+        	$handle = fopen($pathFile, "r");
+        	$content = fread($handle,filesize($pathFile));
+        	
+        	$data = array('á' => '&aacute;','é' => '&eacute;','í' => '&iacute;','ó' => '&oacute;','ú' => '&uacute;',
+        		'ñ' => '&ntilde;', '“' => '&#34', '”' => '&#34', '–' => '&#45');
+        	$newData = strtr($content, $data);
+        	//fwrite($handle,$newData);
+        	$this->set("contrato", $newData);
+        	fclose($handle);
+        	
+        	$this->layout = 'printLay';
+        	
+            /*$pathFile = WWW_ROOT . DS . 'files' . DS . 'Contract_template.txt';
             $handle = fopen($pathFile, "r");
             $content = fread($handle,filesize($pathFile));
             
@@ -126,7 +132,7 @@ class LeasesController extends AppController {
             );
             $this->set($params);
                 
-            $this->layout = 'home';
+            $this->layout = 'home';*/
         }
          
         
@@ -184,13 +190,7 @@ class LeasesController extends AppController {
         		$this->request->data['Location'] = $location['Location'];
         		 
         	}else{
-        		//$message = $this->custoValidation($this->request->data);
-        		$message = null;
-        		if ($message!=null){
-        			$this->Session->setFlash("<div class = 'err'>" . $message . "</div>");
-        			$this->redirect(array('action' => 'edit', $this->Provider->id));
-        		}
-        
+        		
         		$this->request->data['Lease']['end_date'] = date('Y-m-d',strtotime($this->request->data['Lease']['end_date']));
         
         		if($this->Lease->save($this->request->data)){
@@ -319,20 +319,8 @@ class LeasesController extends AppController {
         			array('Payments' => $payment, 'Expenses' => $expense, 'Profits' => $payment - $expense));
         
         	return $profitdetail;
-        }
+        }       
         
-        
-        private function custoValidation($newSale){
-           
-           $message=null;
-           
-           if (($newSale['Sale']['client_id']) == null){
-               $message = 'Cliente: Debe seleccionar un cliente.';
-           } else if (date('Y',strtotime($newSale['Sale']['date'])) < 2010){
-               $message = 'Fecha: Debe ingresar una fecha vÃ¡lida.';
-           }      
-           return $message;            
-        }
         
         private function findConditions($fromDate,$toDate,$client_id){
             $conditions = '';
@@ -371,7 +359,9 @@ class LeasesController extends AppController {
         	if($this->Lease->save()){
         		$this->Session->setFlash("<div class = 'info'>Contrato cerrado con ï¿½xito.</div>");
         		$this->redirect(array('action' => 'view'));
-        	}        	
+        	}    
+
+        	$this->layout = 'home';
         	
         }        
         

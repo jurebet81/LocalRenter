@@ -2,37 +2,30 @@
 
 class Expense extends AppModel {
     
-    /*public $hasMany = array(
-        'Purchasedetail' => array(
-            'className' => 'Purchasedetail',            
-        )        
-    );*/
+	public $validate = array(						
+							
+			'apartment_id' => array(
+				'rule' => array('comparison', '>', 0),
+				'required' => true,
+			),
+			
+			'amount' => array(
+					'rule' => 'numeric',
+					'required' => true,
+					//'message' => 'Por favor ingresar el monto del gasto.',
+					//'allowEmpty' => false,
+			),	
+			'date' => array(												
+					'rule' => array('date', 'ymd'),									
+					'required' => true,
+			),
+	);
     
     public $belongsTo = array(
       'Apartment' => array(
             'className' => 'Apartment',            
             'foreignKey' => 'apartment_id', 
         )  
-    );
+    );    
     
-    public $validate = array( 
-        /*'id_invoice' => array(
-            'rule' => 'alphaNumeric',
-            'required' => true,
-            'message' => 'Por favor ingresar número de factura.'
-        ),*/
-        
-        /*'date_requested' => array(
-            'date' => array(                
-                'rule' => array('date', 'ymd'),
-                'message' => 'Por favor ingrese fecha.',
-            ),
-        ),*/
-         'date' => array(
-            'date' => array(                
-                'rule' => array('date', 'ymd'),
-                'message' => 'Por favor ingrese fecha.',
-            ),
-        ),
-    );
 }

@@ -32,9 +32,9 @@
         <tr> <td> <label> </label></td> <td> <label> </label> </td> </tr>    	
         <tr>     
         	<td><label>FECHA INICIO DE CONTRATO:</label>
-            	<?php echo $this->Form->input('init_date', array('class'=>'datepicker', 'type'=>'text','label'=>'', 'readonly' => 'readonly' )); ?></td> 
+            	<?php echo $this->Form->input('init_date', array('class'=>'datepicker', 'type'=>'text','label'=>'' )); ?></td> 
         	<td><label>FECHA FIN DE CONTRATO:</label>
-            	<?php echo $this->Form->input('end_date', array('class'=>'datepicker', 'type'=>'text','label'=>'', 'readonly' => 'readonly' )); ?> </td>
+            	<?php echo $this->Form->input('end_date', array('class'=>'datepicker', 'type'=>'text','label'=>'' )); ?> </td>
         </tr>
         <tr> <td> <label> </label></td> <td> <label> </label> </td> </tr>               
       	</table>

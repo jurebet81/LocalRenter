@@ -17,7 +17,7 @@
 	            <?php echo $this->Form->input('amount', array ('label' => ''));?> </td>           
 	        <td><label>FECHA: </label>
 	            <?php echo $this->Form->input('date', array(
-	                'class'=>'datepicker', 'type'=>'text','label'=>'','readonly' => 'readonly' )); ?> </td>    
+	                'class'=>'datepicker', 'type'=>'text','label'=>'' )); ?> </td>    
          </tr>
          <tr id = "separator"> <td> <label></label></td> <td> <label> </label> </td> </tr>
          </table>       

@@ -17,8 +17,8 @@
             <td><?php echo h($expense['Expense']['id']); ?></td>
             <td><?php echo h($expense['Apto']['name']); ?></td>   
             <td><?php echo h($expense['Expense']['description']); ?></td>  
-            <td><?php echo h($expense['Expense']['date']); ?></td>   
-            <td><?php echo number_format(h($expense['Expense']['amount']), 0, '.', '.');  ?></td>          
+            <td><?php echo number_format(h($expense['Expense']['amount']), 0, '.', '.');  ?></td>   
+            <td><?php echo h($expense['Expense']['date']); ?></td>          
             <td>
             	<?php echo $this->Html->image('edit-icon.png', array ('alt' =>'CakePHP', 'url' =>
                     array ('controller' => 'Expenses', 'action' => 'edit', $expense['Expense']['id'])

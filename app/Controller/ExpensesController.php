@@ -52,14 +52,8 @@ class ExpensesController extends AppController {
             if ($this->request->is('post')){                         
                 //$this->request->data['Purchase']['date_requested'] = date('Y-m-d',strtotime($this->request->data['Purchase']['date_requested']));
                 $this->request->data['Expense']['date'] = date('Y-m-d',strtotime($this->request->data['Expense']['date']));  
-                
-                //$message = $this->custoValidation($this->request->data);
-                $message = null;
-                if ($message!=null){                  
-                    $this->Session->setFlash("<div class = 'err' >" . $message . "</div>");
-                    $this->redirect(array('action' => 'add'));
-                    return;
-                }                 
+               
+                        
                 if ($this->Expense->save($this->request->data)){
                     $this->Session->setFlash("<div class = 'info'> Gasto ingresado correctamente.</div>");
                     $this->redirect(array('action' => 'add'));
@@ -141,13 +135,7 @@ class ExpensesController extends AppController {
         		$this->request->data['Location'] = $location['Location'];
         		 
         	}else{
-        		//$message = $this->custoValidation($this->request->data);
-        		$message = null;
-        		if ($message!=null){
-        			$this->Session->setFlash("<div class = 'err'>" . $message . "</div>");
-        			$this->redirect(array('action' => 'edit', $this->Provider->id));
-        		}
-        
+        		        
         		$this->request->data['Expense']['date'] = date('Y-m-d',strtotime($this->request->data['Expense']['date']));
         
         		if($this->Expense->save($this->request->data)){
@@ -157,22 +145,7 @@ class ExpensesController extends AppController {
         	}
         	$this->layout = 'home';
         }
-        
-        private function custoValidation($newPurchase){
-           
-            $message=null;
-           
-           if (empty($newPurchase['Purchase']['provider_id'])){
-               $message = 'Proveedor: Debe seleccionar un proveedor.';
-           }else if (empty($newPurchase['Purchase']['id_invoice'])){
-                $message = 'Factura Nro: Es un campo obligatorio';
-            //}else if (date('Y',strtotime($newPurchase['Purchase']['date_requested'])) < 2010){
-                //$message = 'Fecha de pedido: Debe ingresar una fecha válida';
-            }else if(date('Y',strtotime($newPurchase['Purchase']['date_delivered'])) < 2010){
-                $message = 'Fecha de recepción: Debe ingresar una fecha válida';
-            }  
-            return $message;            
-        }
+          
                     
         private function findConditions($fromDate,$toDate,$location_id,$apartment_id){
             $conditions = '';

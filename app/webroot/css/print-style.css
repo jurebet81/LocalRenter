@@ -1,82 +1,8 @@
 html { font: 16px/1 'Open Sans', sans-serif; overflow: auto; padding: 0.5in; }
 html { background: #999; cursor: default; }
 
-body { box-sizing: border-box; height: 11in; margin: 0 auto; overflow: hidden; padding: 0.5in; width: 8.5in; }
+body { box-sizing: border-box; height: 20in; margin: 0 auto; overflow: hidden; padding: 0.5in; width: 8.5in; }
 body { background: #FFF; border-radius: 1px; box-shadow: 0 0 1in -0.25in rgba(0, 0, 0, 0.5); }
-
-#StoreName {
-	font-stretch: ultra-expanded;
-	font-size : 20px;
-	font-weight : border;	
-}
-#ReceiptInfo, #CustomerInfo  {	
-	border-radius	: 	6px;
-	border	: 	2px solid black;
-	margin-left	:		auto; 
-	margin-right:		auto;
-}
-#ReceiptHeader {
-	width	:	100%;
-}
-#StoreInfo {
-	width	:	68%;
-	height	: 	100px; 
-	float	:	left;
-	padding-left	:	10px;	
-	text-align : center;
-}
-#ReceiptInfo {
-	height	: 	100px; 	
-	width	:	28%;
-	float	:	right;
-	padding-left	:	10px;
-	
-	text-align : center;
-}
-#CustomerInfo {		
-	width	:	100%;
-	height	: 	70px; 	
-	padding-left	:	10px;
-	margin-top: 90px;	
-}
-
-#SaleInfo {	
-	border-collapse: collapse;
-	table-layout: auto;
-	width		: 	100%;
-	border	: 	2px solid black;	
-}
-#SaleInfo th {
-	border: 2px solid black; 
-}
-#SaleInfo td {
-	border-left : 1px solid black;    
-}
-#Amount {
-text-align : center;
- width:7%;
- white-space:nowrap;
-}
-.Values {
-text-align : right;
-padding-right : 5px;
-width:15%;
-white-space:nowrap;
-}
-#SpecialRow{
-	border-bottom : 2px solid black;	
-}
-.TotalValues{
-	text-align : right;
-	font-weight: bold;
-}
-.CustoTags{
-	font-weight: bold;
-}
-
-#footerReceipt{
-	text-align : center;
-}
 
 @media print {
 	html { background: none; padding: 0; }

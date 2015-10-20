@@ -69,7 +69,7 @@
 <script language="javascript" type="text/javascript">		
              $(document).ready(function() {             	
                 $('.CloseExpenseImg').click(function(){                                        
-                	var answer = confirm("�Esta Seguro que desea eliminar el gasto?"); 
+                	var answer = confirm("�Esta Seguro que desea eliminar el pago?"); 
                 	if (answer==false){
                 	    return false;
                 	}                	                

@@ -34,7 +34,7 @@
                          ));
                 ?>          
                 <?php echo $this->Html->image('printer-icon.png', array ('alt' =>'CakePHP', 'url' =>
-                    array ('controller' => 'Leases', 'action' => 'download', $lease['Lease']['id'])
+                    array ('controller' => 'Leases', 'action' => 'printContract', $lease['Lease']['id'])
                          ));
                 ?> <span class="CloseContractImg">                                        
                  <?php echo $this->Html->image('delete-icon.png', array ("alt" =>"CakePHP", 'url' =>
