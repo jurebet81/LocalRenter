@@ -102,7 +102,7 @@
 <?php //echo $this->element('sql_dump'); ?>
     
     <div id ="footer">        
-        This site is © Copyright website 2014, all rights reserved. <br>
+        This site is © Copyright website 2015, all rights reserved. <br>
         <?php echo 'Designed by ' . $this->Html->link('Templatemo', 'http://www.templatemo.com/') . ' Free CSS Templates.'; ?><br>
         Adaptado y modificado por: Juli&aacute;n Restrepo B. 312 898 6803 julianrpo2711@hotmail.com.
     </div>

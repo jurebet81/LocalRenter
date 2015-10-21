@@ -7,11 +7,14 @@ class Renter extends AppModel {
             )        
      );
      
-     /*public $validate = array(
-         'name' => array(
-             //'rule' => '/^[ A-Za-z0-9Ã‘Ã±Ã¡Ã�Ã©Ã‰Ã­Ã�Ã³Ã“ÃºÃš_@.]*$/',
+     public $validate = array(
+         'name' => array(            
             'required' => true
-         )
-     );*/
+         ),
+     	'identification' => array(
+     		'rule' => 'numeric',
+     		'required' => true,
+     	),
+     );
 }
 ?>

@@ -1,7 +1,7 @@
 <table class = "table_header">
 	<tr>
 		<td><h3>CONTRATO DE ARRENDAMIENTO DE VIVIENDA URBANA</h3></td> 
-		<td id = "contract_id">No. <span>00-lease_id</span></td> 
+		<td id = "contract_id"><span>No.</span> 00-lease_id</td> 
 	</tr>
 </table>
 <b>LUGAR Y FECHA DE CELEBRACIÓN DEL CONTRATO:</b> Andes, init_d_day de init_d_month de init_d_year. </br></br>
@@ -13,12 +13,12 @@
 <b>Nombre e identificación:</b> </br>   
 <b>Dirección del inmueble:</b>  location apartment. </br> 
 <b>Precio o canon:</b>      ($ amount ) </br> 
-<b>Avalúo catastral:</b>                                                                   ($               ) </br> 
+<b>Avalúo catastral:</b>  ($  ) </br> 
 <b>Fecha de iniciación del contrato:</b>   init_d_day de init_d_month de init_d_year</br>
 <b>Fecha de fin del contrato:</b>   end_d_day de end_d_month de end_d_year  </br>
 <b>El inmueble consta de los servicios de:</b>   </br>
-<b>Cuyo pago corresponde a:</b>   holder </br>
-Además de las anteriores estipulaciones, las partes de común acuerdo convienen las siguientes cláusulas: </br>
+<b>Cuyo pago corresponde a:</b>   holder </br></br>
+Además de las anteriores estipulaciones, las partes de común acuerdo convienen las siguientes cláusulas:
 <p><b>PRIMERA. – OBJETO DEL CONTRATO:</b>  Mediante el presente contrato, el (los) arrendador (es) se obliga (n) a conceder a el (los) arrendatario (s) el goce del inmueble urbano destinado a vivienda cuyos linderos se determinan en la cláusula décima quinta de este contrato junto con los demás elementos que figuran en inventario separado firmado por las partes, y el (los) arrendatario (s), a pagar por este goce el canon o renta estipulado.</p>
 <p><b>SEGUNDA. – PAGO, OPORTUNIDAD Y SITIO:</b>  El (los) arrendatario (s) se obliga (n) a pagar a el (los) arrendador (es) por el goce del inmueble y demás elementos, el precio o canon acordado en       , la suma de                                                                                        ($               ) dentro de los primeros                               (    ) días de cada periodo contractual, a el (los) arrendador (es) o a su orden. El canon podrá  ser incrementado anualmente de acuerdo con el porcentaje autorizado legalmente. Si el canon se pagare en cheque, el canon se considera satisfecho en la fecha de pago sólo una vez que el banco haga el respectivo abono siempre y cuando el cheque haya sido presentado en tiempo para su pago al respectivo banco.</p>
 <p><b>TERCERA. – DESTINACION:</b> El (los) arrendatario (s) se compromete (n) a darle al inmueble el uso para vivienda de él (ellos) y su (s) familia (s), y no podrá (n) darle otro uso, ni ceder, ni transferir el arrendamiento sin la autorización escrita de el (los) arrendador (es). El incumplimiento de esta obligación, dará derecho a el (los) arrendador (es) para dar por terminado este contrato y exigir la entrega del inmueble. En caso de cesión o subarriendo por parte de el (los) arrendatario (s), el (los) arrendador (es) podrá (n) celebrar un nuevo contrato de arriendo con los usuarios reales, sin necesidad de requerimientos judiciales o privados a los cuales renuncia (n) expresamente el (los) arrendatario (s).</p>
@@ -36,11 +36,10 @@ Además de las anteriores estipulaciones, las partes de común acuerdo convienen l
 y                                                                           mayor y vecino de                                               , identificado (a) con 
 quien (es) declara (n) que se obliga (n) solidariamente con el (los) arrendador (es) durante el término de duración del contrato y el de sus prórrogas y por el tiempo que permanezca el inmueble en poder de éste (os).   
 <p><b>DÉCIMA CUARTA.</b>- El (los) arrendatario (s) faculta (n) expresamente a el (los) arrendador (es) para llenar en este documento el espacio en blanco destinado a los linderos.   </p>
-<b>DÉCIMA QUINTA.</b>– LINDEROS DEL INMUEBLE: </br>
-<b>DÉCIMA SEXTA:</b> Las partes firmantes señalan las siguientes direcciones para recibir notificaciones:</br>
-
-En constancia de lo anterior, se firma por las partes el día (init_d_day), del mes de init_d_month del año (init_d_year).
-</br></br></br>
+<p><b>DÉCIMA QUINTA.</b>– LINDEROS DEL INMUEBLE: </br></p>
+<p><b>DÉCIMA SEXTA:</b> Las partes firmantes señalan las siguientes direcciones para recibir notificaciones:</br>
+En constancia de lo anterior, se firma por las partes el día (init_d_day), del mes de init_d_month del año (init_d_year).</p>
+</br></br> 	
 <table>
 	<tr>
 		<td><b>ARRENDADOR</b></td> 

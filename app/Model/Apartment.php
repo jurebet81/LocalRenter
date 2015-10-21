@@ -21,18 +21,19 @@ class Apartment extends AppModel {
         )  
     );
             
-    /*public $validate = array(           
-         'name' => array(
-             'rule' => '/^[ A-Za-z0-9Ã‘Ã±Ã¡Ã�Ã©Ã‰Ã­Ã�Ã³Ã“ÃºÃš_@.]*$/',
+    public $validate = array(           
+         'name' => array(             
              'required' => true
-         ),    
+         ), 
+    	'address' => array(
+    		'required' => true
+    	),
         'rent_price' => array(
                 'rule' => 'numeric',
-                'required' => true,                
-                'message' => 'Numeros permitidos'
+                'required' => true, 
         ), 
                               
-     );*/
+     );
   
     
 }

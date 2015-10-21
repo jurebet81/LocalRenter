@@ -1,7 +1,7 @@
 html { font: 16px/1 'Open Sans', sans-serif; overflow: auto; padding: 0.5in; }
 html { background: #999; cursor: default; }
 
-body { box-sizing: border-box; height: 40in; margin: 0 auto; overflow: hidden; padding: 0.5in; width: 8.5in; }
+body { box-sizing: border-box; height: 22in; margin: 0 auto; overflow: hidden; padding: 0.3in; width: 8.5in; }
 body { background: #FFF; border-radius: 1px; box-shadow: 0 0 1in -0.25in rgba(0, 0, 0, 0.5); }
 
 h3 {
@@ -11,10 +11,17 @@ h3 {
 .table_header{
 	width : 100%;
 }
+p{
+	font-size: 10.4px;
+	text-align: justify;
+}
+
 
 #contract_id{
-	text-align : right;
-	font-weight : bold;	
+	text-align : center;
+	font-weight : bold;
+	border: 1px solid black;
+	border-radius : 5px;
 }
 
 span{
