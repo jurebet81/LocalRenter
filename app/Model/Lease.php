@@ -20,8 +20,7 @@ class Lease extends AppModel {
     );
     
     public $validate = array(    		
-    		'holder_name' => array(   
-    				'rule' => 'alphaNumeric',
+    		'holder_name' => array( 
     				'required' => true,
     		),    		
     		'holder_identification' => array(

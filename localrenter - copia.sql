@@ -19,8 +19,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `localrenter`
 --
-CREATE DATABASE IF NOT EXISTS `localrenter` DEFAULT CHARACTER SET utf8 COLLATE utf8_spanish_ci;
-USE `localrenter`;
 
 -- --------------------------------------------------------
 

@@ -66,7 +66,7 @@ class LeasesController extends AppController {
                        
                 if ($this->Lease->save($this->request->data)){
                     //$this->Session->setFlash("<div class = 'info'>Contrato ingresado correctamente, Resumen del contrato</div>");
-                    $this->redirect(array('controller' => 'Leases', 'action' => 'printContract', $this->lease->id));
+                    $this->redirect(array('controller' => 'Leases', 'action' => 'printContract', $this->Lease->id));
                 }  
             }else {
                 
@@ -94,13 +94,46 @@ class LeasesController extends AppController {
         	
         	$pathFile = WWW_ROOT . DS . 'files' . DS . 'Contract_template_2.txt';
         	$handle = fopen($pathFile, "r");
-        	$content = fread($handle,filesize($pathFile));
+        	$f_content = fread($handle,filesize($pathFile));
         	
-        	$data = array('á' => '&aacute;','é' => '&eacute;','í' => '&iacute;','ó' => '&oacute;','ú' => '&uacute;',
-        		'ñ' => '&ntilde;', '“' => '&#34', '”' => '&#34', '–' => '&#45');
-        	$newData = strtr($content, $data);
-        	//fwrite($handle,$newData);
-        	$this->set("contrato", $newData);
+        	$this->Lease->id = $id;
+        	$con = $this->Lease->read();
+
+        	$this->loadModel('Location');
+        	$this->Location->id = $con['Apartment']['location_id'];
+        	
+        	$location = $this->Location->read();
+        	$con['Location'] = $location['Location'];
+        	
+        	$months = array("-01-"=>"-Enero-","-02-"=>"-Febrero-","-03-"=>"-Marzo-","-04-"=>"-Abril-","-05-"=>"-Mayo-","-06-"=>"-Junio-",
+        			"-07-"=>"-Julio-","-08-"=>"-Agosto-","-09-"=>"-Septiembre-","-10-"=>"-Octubre-","-11-"=>"-Noviembre-","-12-"=>"-Diciembre-",
+        		);
+        	
+        	$con['Lease']['init_date'] = strtr($con['Lease']['init_date'],$months);  
+        	$con['Lease']['end_date'] = strtr($con['Lease']['end_date'],$months);
+        	
+        	$init_d = explode("-", $con['Lease']['init_date'] );
+        	$end_d = explode("-", $con['Lease']['end_date'] );
+        	
+        	$data = array(
+        			"lease_id" => $id,"init_d_day" => $init_d[2],"init_d_month" => $init_d[1],
+        			"init_d_year" => $init_d[0], "renter" => $con['Renter']['name'],
+        			"renter_ide" => $con['Renter']['identification'], "holder" => $con['Lease']['holder_name'],
+        			"holder_ide" => $con['Lease']['holder_identification'], "location" => $con['Lease'],
+        			"location" => $con['Location']['name'], "apartment" => $con['Apartment']['name'],
+        			"amount" => number_format($con['Lease']['amount'], 0, '.', '.'),
+        			"end_d_day" => $init_d[2],"end_d_month" => $init_d[1], "end_d_year" => $init_d[0]
+        	);
+        	
+        	$contract = strtr($f_content, $data);
+        	
+        	$ascii = array('á' => '&aacute;','é' => '&eacute;','í' => '&iacute;','ó' => '&oacute;','ú' => '&uacute;',
+        			'Á' => '&Aacute;','É' => '&Eacute;','Í' => '&Iacute;','Ó' => '&Oacute;','Ú' => '&Uacute;',
+        			'ñ' => '&ntilde;','Ñ' => '&Ntilde;', '“' => '&#34', '”' => '&#34', '–' => '&#45');
+        	
+        	$printContract = strtr($contract, $ascii);
+        	
+        	$this->set("contrato", $printContract);
         	fclose($handle);
         	
         	$this->layout = 'printLay';
@@ -109,8 +142,7 @@ class LeasesController extends AppController {
             $handle = fopen($pathFile, "r");
             $content = fread($handle,filesize($pathFile));
             
-            $data = array("inquilino_name" => "Julian Inquilino","iniquilino_identification" => '1027884448',
-                'apartment_name' => 'apto de en lado', 'apartment_location' => 'Andes');
+           
             $newData = strtr($content, $data);
             
             $pathFile2 = WWW_ROOT . DS . 'files' . DS . 'Contract.txt';
